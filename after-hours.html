@@ -140,14 +140,18 @@
   @media (max-width:760px){
     :root{--gutter:24px;}
     .hist{display:none;}
-    .cap{width:74vw;}
+    .cap{width:86vw;}
     .cap .t{font-size:clamp(30px,9vw,46px);}
   }
+  /* portrait remap active (set by JS): keep these in sync with the remap regardless of width */
+  body.ah-portrait .hist{display:none;}
+  body.ah-portrait .cap{width:min(560px,86vw);}
+  body.ah-portrait .cap .t{font-size:clamp(30px,7vw,48px);}
 
   /* shared OS footer, rises over the stage at the very end */
   .site-footer{position:relative;z-index:5;width:100%;min-height:100vh;background:var(--navy);
       padding:90px 24px 50px;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-  .footer-inner{width:min(1000px,94vw);margin:0 auto;text-align:center;}
+  .footer-inner{width:min(1000px,100%);margin:0 auto;text-align:center;}
   .footer-explore{margin-bottom:40px;}
   .fe-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:20px;}
   .fe-title{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(22px,3vw,34px);letter-spacing:-.02em;line-height:1.28;color:var(--cream);}
@@ -171,10 +175,22 @@
   .footer-nav .fn-id{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,242,237,.4);}
   .footer-nav .fn-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:500;letter-spacing:-.01em;color:#F5F2ED;}
   .footer-nav .fn-desc{font-family:'Roboto',sans-serif;font-size:11px;line-height:1.35;color:rgba(245,242,237,.5);}
-  @media(max-width:760px){.footer-nav{flex-wrap:wrap;gap:10px;}.footer-nav a{flex:1 1 40%;}}
+  @media(max-width:820px){.footer-nav{flex-wrap:wrap;gap:10px;}.footer-nav a{flex:1 1 40%;}}
   /* keyboard focus: consistent on-brand ring. The site uses a custom cursor (cursor:none),
      so keyboard / assistive-tech users depend entirely on a clear, visible focus state. */
   a:focus-visible,button:focus-visible,[tabindex]:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:3px;}
+
+  /* ============ MOBILE HARDENING (added) ============ */
+  @media (max-width:820px){
+    .logo-nav{top:16px;left:16px;gap:8px;}
+    .logo-nav .nm{display:none;}                 /* name collides with centre tag on phones */
+    .section-tag{display:none;}                   /* centred status text overlaps logo + hud */
+    .hud,.hud.render-status{top:16px;right:16px;}
+    h1,h2,h3,.hero-name,.p-title,.sm-title,.work-title,.fe-title,.footer-cta,.stmt-line,.sc-title,.sca-name,.fd-title,.vw-pname,.mem-title,.dsr-title,.p-sub{overflow-wrap:break-word;word-break:break-word;}
+    .footer-cta,.stmt-line{font-size:clamp(26px,7vw,44px);}
+    .hero-name{font-size:clamp(38px,11vw,64px);}
+  }
+
 </style>
   <script src="content/site.js"></script>
   <script src="content/navigation.js"></script>
@@ -374,6 +390,34 @@
   ];
   var N=MEM.length;
 
+  /* Mobile: the desktop spreads are landscape (photos beside a side caption) and can't fit a
+     portrait / narrow screen without overlapping. Precompute a portrait remap for each scene.
+     setMode() (below) swaps between desktop and portrait live on resize; the scroll / fade /
+     drift engine itself is untouched, so the animation is identical in both. */
+  (function(){
+    var SLOTS=[[.40,.23],[.63,.39],[.40,.55],[.66,.57],[.32,.42],[.60,.24]];
+    MEM.forEach(function(m){
+      var pi=0;
+      m.pieces.forEach(function(p){
+        p.ox=p.x; p.oy=p.y; p.ow=p.w; p.orot=p.rot; p.odepth=p.depth; p.odx=(p.dx||0);
+        p.mx=p.x; p.my=p.y; p.mw=p.w; p.mrot=p.rot; p.mdepth=p.depth; p.mdx=0;
+        if(p.t==='photo'){ var s=SLOTS[pi%SLOTS.length]; pi++;
+          p.mx=s[0]; p.my=s[1]; p.mw=Math.max(30,Math.min(p.w,44)); p.mrot=(pi%2?4:-4); p.mdepth=1.0; }
+        else if(p.t==='cap'){ p.mx=.5; p.my=.84; p.mdepth=1.0; }
+        else if(p.t==='note'){ p.mx=.30; p.my=.09; p.mrot=-4; p.mdepth=1.1; }
+        else if(p.t==='ticket'){ p.mx=.5; p.my=.12; p.mdepth=1.1; }
+        else if(p.t==='doodle'){ p.mx=.85; p.my=.13; p.mdepth=1.15; }
+      });
+    });
+  })();
+  function ahIsMobile(){ return (window.innerWidth < 1440) || !!(window.matchMedia && (window.matchMedia('(hover:none)').matches || window.matchMedia('(pointer:coarse)').matches)); }
+  var AH_MOBILE = ahIsMobile();
+  MEM.forEach(function(m){ m.pieces.forEach(function(p){
+    if(AH_MOBILE){ p.x=p.mx;p.y=p.my;p.w=p.mw;p.rot=p.mrot;p.depth=p.mdepth;p.dx=p.mdx; }
+    else { p.x=p.ox;p.y=p.oy;p.w=p.ow;p.rot=p.orot;p.depth=p.odepth;p.dx=p.odx; }
+  });});
+  if(AH_MOBILE && document.body) document.body.classList.add('ah-portrait');
+
   /* build DOM */
   var stage=document.getElementById('stage'), mems=[];
   MEM.forEach(function(m,i){
@@ -422,7 +466,7 @@
   });
 
   /* sizing / scroll */
-  var vh=innerHeight, DRIFT=1.0;
+  var vh=innerHeight, DRIFT=(AH_MOBILE?0.42:1.0);
   /* pointer parallax: the spread responds by depth, so it reads as a physical
      surface you are leaning over rather than a flat slideshow */
   var pnx=0, pny=0, pmx=0, pmy=0, PARA=15;
@@ -508,8 +552,23 @@
     } else { ['introK','introT','introS'].forEach(function(id){document.getElementById(id).style.opacity=1;}); }
   }
 
+  function setMode(mobile){
+    AH_MOBILE = mobile;
+    DRIFT = mobile?0.42:1.0;
+    document.body.classList.toggle('ah-portrait', mobile);
+    for(var i=0;i<mems.length;i++){ var ps=mems[i].pieces;
+      for(var k=0;k<ps.length;k++){ var o=ps[k], p=o.pc;
+        if(mobile){ p.x=p.mx;p.y=p.my;p.w=p.mw;p.rot=p.mrot;p.depth=p.mdepth;p.dx=p.mdx; }
+        else { p.x=p.ox;p.y=p.oy;p.w=p.ow;p.rot=p.orot;p.depth=p.odepth;p.dx=p.odx; }
+        o.el.style.left=(p.x*100)+'%'; o.el.style.top=(p.y*100)+'%';
+        if(p.t==='photo') o.el.style.width=p.w+'vw';
+      }
+    }
+    layout(); readScroll();
+  }
+
   window.addEventListener('scroll',readScroll,{passive:true});
-  window.addEventListener('resize',function(){layout();readScroll();});
+  window.addEventListener('resize',function(){ var m=ahIsMobile(); if(m!==AH_MOBILE) setMode(m); layout(); readScroll(); });
   window.addEventListener('popstate',function(){
     var mm=location.hash.match(/#\/([\w-]+)/);
     if(mm){ for(var i=0;i<N;i++){ if(MEM[i].slug===mm[1]){ navigating=true; window.scrollTo({top:(i+1)*vh,behavior:RM?'auto':'smooth'}); setTimeout(function(){navigating=false;},700); break; } } }

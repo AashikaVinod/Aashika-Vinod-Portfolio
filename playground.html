@@ -398,7 +398,7 @@
   .p-footer{background:var(--navy);}
   /* FOOTER  — richer footer restored to match the homepage v16 reference */
   #footer,.p-footer{position:relative;width:100%;min-height:90vh;padding:90px 24px 50px;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-  .footer-inner{width:min(1000px,94vw);margin:0 auto;text-align:center;}
+  .footer-inner{width:min(1000px,100%);margin:0 auto;text-align:center;}
   .footer-explore{margin-bottom:40px;}
   .fe-eyebrow{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.14em;text-transform:uppercase;color:var(--red);margin-bottom:20px;}
   .fe-title{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(22px,3vw,34px);letter-spacing:-.02em;line-height:1.28;color:var(--cream);}
@@ -449,10 +449,22 @@
   .footer-nav .fn-id{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,242,237,.4);}
   .footer-nav .fn-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:500;letter-spacing:-.01em;color:#F5F2ED;}
   .footer-nav .fn-desc{font-family:'Roboto',sans-serif;font-size:11px;line-height:1.35;color:rgba(245,242,237,.5);}
-  @media(max-width:760px){.footer-nav{flex-wrap:wrap;gap:10px;}.footer-nav a{flex:1 1 40%;}}
+  @media(max-width:820px){.footer-nav{flex-wrap:wrap;gap:10px;}.footer-nav a{flex:1 1 40%;}}
   /* keyboard focus: consistent on-brand ring. The site uses a custom cursor (cursor:none),
      so keyboard / assistive-tech users depend entirely on a clear, visible focus state. */
   a:focus-visible,button:focus-visible,[tabindex]:focus-visible,input:focus-visible,select:focus-visible,textarea:focus-visible{outline:2px solid var(--red);outline-offset:3px;border-radius:3px;}
+
+  /* ============ MOBILE HARDENING (added) ============ */
+  @media (max-width:820px){
+    .logo-nav{top:16px;left:16px;gap:8px;}
+    .logo-nav .nm{display:none;}                 /* name collides with centre tag on phones */
+    .section-tag{display:none;}                   /* centred status text overlaps logo + hud */
+    .hud,.hud.render-status{top:16px;right:16px;}
+    h1,h2,h3,.hero-name,.p-title,.sm-title,.work-title,.fe-title,.footer-cta,.stmt-line,.sc-title,.sca-name,.fd-title,.vw-pname,.mem-title,.dsr-title,.p-sub{overflow-wrap:break-word;word-break:break-word;}
+    .footer-cta,.stmt-line{font-size:clamp(26px,7vw,44px);}
+    .hero-name{font-size:clamp(38px,11vw,64px);}
+  }
+
 </style>
   <script src="content/site.js"></script>
   <script src="content/navigation.js"></script>
@@ -1188,10 +1200,11 @@
   //      one by one, so the reveal can't be accidentally scrolled past ----
   const drawerStage=document.getElementById('drawerStage');
   const REVEAL_STEP=150;
+  function revealBudget(){ return folders.length*REVEAL_STEP + 40; }   // fixed scroll distance for the reveal
   function sizeStage(){
     if(!drawerStage){return;}
     if(reduceMotion){ drawerStage.style.minHeight=''; return; }
-    drawerStage.style.minHeight=(drawer.offsetHeight + 96 + folders.length*REVEAL_STEP + 40)+'px';
+    drawerStage.style.minHeight=(drawer.offsetHeight + 96 + revealBudget())+'px';
   }
   let revealedCount=0, revealHandedOff=false, scrollRevealOn=false;
   function revealUpTo(k){
@@ -1213,7 +1226,7 @@
   function onRevealScroll(){
     if(!scrollRevealOn||!drawerStage)return;
     var r=drawerStage.getBoundingClientRect();
-    var pinLen=drawerStage.offsetHeight - drawer.offsetHeight - 96;
+    var pinLen=revealBudget();                       // stable: matches the budget sizeStage() reserves
     var p=pinLen>0 ? (96 - r.top)/pinLen : 1;
     if(p<0)p=0; if(p>1)p=1;
     var k=Math.max(1, Math.round(p*folders.length));
@@ -1223,6 +1236,11 @@
     folders.forEach(function(f,i){ f.style.setProperty('--predealY',(90+i*34)+'px'); f.classList.add('dealing'); });
     sizeStage();
     scrollRevealOn=true;
+    // keep the pinned stage exactly as tall as the drawer needs, even as images / layout settle,
+    // so the reveal fraction stays accurate no matter when things finish loading
+    try{ if(window.ResizeObserver){ new ResizeObserver(function(){ sizeStage(); }).observe(drawer); } }catch(e){}
+    window.addEventListener('load', sizeStage);
+    setTimeout(sizeStage, 400);
     window.addEventListener('scroll', onRevealScroll, {passive:true});
     try{ if(typeof lenis!=='undefined' && lenis && lenis.on){ lenis.on('scroll', onRevealScroll); } }catch(e){}
     onRevealScroll();

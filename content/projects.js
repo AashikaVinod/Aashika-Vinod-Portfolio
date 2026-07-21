@@ -161,4 +161,4 @@ window.PROJECTS = [
 /* The four folders on the homepage, left to right.
    Use the "slug" of any project above. To swap a featured
    project, just change a slug here. Keep up to four. */
-window.FEATURED = ["respectly", "mysociety", "unmapped", "project-04"];
+window.FEATURED = ["respectly", "unmapped", "mysociety", "project-04"];
