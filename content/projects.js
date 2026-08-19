@@ -82,13 +82,13 @@ window.PROJECTS = [
     prototype: { type:"html", url:"https://aashikavinod.github.io/Respectly", label:"Respectly · live prototype", at:23 }
   },
   {
-    slug: "mysociety",
-    title: "MySociety",
-    tag: "Admin lead",
-    discipline: "Systems · IA",
+    slug: "nest",
+    title: "Nest",
+    tag: "Solo",
+    discipline: "UX Research · Visual · Interaction",
     year: "2025",
-    role: "Admin lead",
-    status: "Shipped",
+    role: "Product Designer & UX Researcher",
+    status: "Prototype",
     thumbnail: "b",
     cover: "cov-b",
     eyebrow: "Case Study 02",
@@ -97,7 +97,21 @@ window.PROJECTS = [
     overviewHeading: "",
     overview1: "",
     overview2: "",
-    images: [],
+    images: [
+      {src:"images/nest/01.jpg", alt:"Nest, cover page"},
+      {src:"images/nest/02.jpg", alt:"Nest, project overview"},
+      {src:"images/nest/03.jpg", alt:"Nest, design process"},
+      {src:"images/nest/04.jpg", alt:"Nest, research"},
+      {src:"images/nest/05.jpg", alt:"Nest, problem"},
+      {src:"images/nest/06.jpg", alt:"Nest, personas and journey maps"},
+      {src:"images/nest/07.jpg", alt:"Nest, design system"},
+      {src:"images/nest/08.jpg", alt:"Nest, personalisations"},
+      {src:"images/nest/09.jpg", alt:"Nest, IA and flows"},
+      {src:"images/nest/10.jpg", alt:"Nest, wireframes and lo-fi"},
+      {src:"images/nest/11.jpg", alt:"Nest, flow 1"},
+      {src:"images/nest/12.jpg", alt:"Nest, flow 2"},
+      {src:"images/nest/13.jpg", alt:"Nest, mockups"}
+    ],
     prototype: null
   },
   {
@@ -161,4 +175,4 @@ window.PROJECTS = [
 /* The four folders on the homepage, left to right.
    Use the "slug" of any project above. To swap a featured
    project, just change a slug here. Keep up to four. */
-window.FEATURED = ["respectly", "unmapped", "mysociety", "project-04"];
+window.FEATURED = ["respectly", "unmapped", "nest", "project-04"];

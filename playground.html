@@ -108,7 +108,11 @@
      THE DRAWER
      ============================================================ */
   .drawer-stage{position:relative;}
-  .drawer{position:sticky;top:96px;border-radius:18px;padding:24px 24px 28px;
+  /* The drawer is pinned by JS (a per-frame rAF controller), not native position:sticky —
+     native sticky can be outrun by a fast flick and scrolled past. These three states are
+     driven from script: `pin-before` (normal flow, above the zone), `pin-fixed` (locked to the
+     viewport while you scroll through the reveal), `pin-after` (parked at the bottom of the zone). */
+  .drawer{position:relative;border-radius:18px;padding:24px 24px 28px;
     background:linear-gradient(177deg,#f4eee4,#e7e0d3 55%,#ddd3c2);
     border:1px solid #d6cdbd;border-top-color:#efe9dd;
     box-shadow:
@@ -134,6 +138,10 @@
       0 70px 140px -30px rgba(0,0,0,.6);}
   .drawer::after{content:'';position:absolute;left:0;right:0;bottom:0;height:22px;background:linear-gradient(180deg,rgba(30,42,58,.11),transparent);pointer-events:none;}
   body.deep .drawer::after{background:linear-gradient(180deg,rgba(0,0,0,.34),transparent);}
+  /* JS-driven pin states (see the pin controller in script). Width/left are set inline while fixed
+     so the drawer keeps its exact in-flow size. */
+  .drawer.pin-fixed{position:fixed;top:96px;z-index:5;transform:none !important;}
+  .drawer.pin-after{position:absolute;left:0;right:0;bottom:0;transform:none !important;}
 
   /* ===== SIGNATURE: cursor-tracked light-table ===== */
   /* a soft spotlight trails the cursor across the drawer; folders lift & warm by proximity */
@@ -430,8 +438,28 @@
     .vw-body{grid-template-columns:1fr;}
     .logo-nav{left:20px;}.hud{right:20px;}
     .section-tag{display:none;}
+    /* give the drawer interior more room on narrow screens */
+    .drawer{padding:18px 16px 22px;}
+    /* the header row was clipping "5 folders" off the right edge — let it wrap and
+       keep the folder count on its own line so nothing is cut off */
+    .drawer-rail{flex-wrap:wrap;gap:8px;margin-bottom:20px;font-size:9px;letter-spacing:.08em;}
+    .drawer-rail .rail-path{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .drawer-rail .rail-line{display:none;}
+    .drawer-cmd{font-size:11px;}
+    .folder-face{padding:16px 16px;min-height:112px;gap:12px;}
+    .folder-face .ff-name{font-size:18px;}
+    .folder-tab{font-size:9px;padding:7px 12px;}
   }
-  @media (max-width:560px){ .photo{width:120px;} }
+  @media (max-width:560px){
+    .photo{width:120px;}
+    .drawer{padding:16px 13px 20px;}
+    .folder-face .ff-strip{width:38px;height:38px;}
+    .folder-face .ff-strip svg{width:20px;height:20px;}
+    .folder-face .ff-name{font-size:16.5px;}
+    .folder-face .ff-meta{font-size:9px;}
+  }
+  @media (max-width:560px) and (min-width:0px){ .drawer-rail .rail-cats{display:none;} }
+
   @media (prefers-reduced-motion:reduce){
     *{animation:none !important;transition-duration:.001ms !important;transition-delay:0ms !important;}
     .folder.active .photo{opacity:1;
@@ -1196,54 +1224,122 @@
     const total=120 + (folders.length-1)*230 + 1500;
     setTimeout(()=>{ folders.forEach(f=>f.classList.remove('dealing')); if(!reduceMotion)lightRAF=requestAnimationFrame(lightLoop); }, total + 120);
   }
-  // ---- scroll-pinned folder reveal: the drawer stays pinned while folders float in
-  //      one by one, so the reveal can't be accidentally scrolled past ----
+  // ---- scroll-pinned folder reveal ---------------------------------------
+  // The drawer is pinned and the folders deal in one-by-one AS YOU SCROLL.
+  // This is driven every animation frame (not by scroll events), and the pin is
+  // applied by JS (position:fixed) rather than CSS sticky — so a fast flick can
+  // never outrun it: the drawer's on-screen position and the reveal count are both
+  // pure functions of the scroll position, recomputed on every single frame.
   const drawerStage=document.getElementById('drawerStage');
-  const REVEAL_STEP=150;
-  function revealBudget(){ return folders.length*REVEAL_STEP + 40; }   // fixed scroll distance for the reveal
-  function sizeStage(){
-    if(!drawerStage){return;}
-    if(reduceMotion){ drawerStage.style.minHeight=''; return; }
-    drawerStage.style.minHeight=(drawer.offsetHeight + 96 + revealBudget())+'px';
+  const REVEAL_STEP=260;                 // scroll distance (px) budgeted per folder — deliberate, not instant
+  function revealBudget(){ return folders.length*REVEAL_STEP; }   // total pinned scroll distance
+  const PIN_TOP=96;                       // where the pinned drawer sits from the top of the viewport
+
+  // Geometry, remeasured whenever layout can change. pinStartY is the page scroll
+  // position at which the drawer's top reaches PIN_TOP and the pin begins. It is measured
+  // from the stage's stable document offset (via offsetTop accumulation) so it never drifts
+  // when the drawer toggles in and out of position:fixed.
+  let pinStartY=0, drawerH=0, stageLeft=0, stageWidth=0;
+  function docTop(el){ let y=0; while(el){ y+=el.offsetTop; el=el.offsetParent; } return y; }
+  function measurePin(){
+    if(!drawerStage) return;
+    // Never recompute the anchor while the drawer is out of flow — the stage has collapsed
+    // to its reserved height and any read would be mid-transition. Just keep the current values.
+    if(drawer.classList.contains('pin-fixed')) return;
+    stageLeft=drawerStage.getBoundingClientRect().left;   // viewport-x for the fixed drawer
+    stageWidth=drawerStage.clientWidth;                    // exact in-flow width to preserve
+    drawerH=drawer.offsetHeight;
+    pinStartY=Math.max(0, Math.round(docTop(drawerStage) - PIN_TOP));
+    if(!reduceMotion){ drawerStage.style.minHeight=(drawerH + revealBudget())+'px'; }
+    else { drawerStage.style.minHeight=''; }
   }
-  let revealedCount=0, revealHandedOff=false, scrollRevealOn=false;
+  // keep 'sizeStage' name working for the existing resize handler
+  function sizeStage(){ measurePin(); }
+
+  let revealedCount=0, revealHandedOff=false, pinArmed=false;
   function revealUpTo(k){
+    if(k<0)k=0; if(k>folders.length)k=folders.length;
     for(var i=revealedCount;i<k;i++){
       var f=folders[i];
       f.style.transform='translateY('+(i*STACK_STEP)+'px)';
       f.classList.remove('predeal');
       playTick();
     }
-    if(k>revealedCount)revealedCount=k;
+    // allow un-revealing when scrolling back up, so the reveal is fully scrubbable
+    for(var j=revealedCount-1;j>=k;j--){
+      var g=folders[j];
+      g.style.transform='translateY('+((90+j*34))+'px)';
+      g.classList.add('predeal');
+    }
+    revealedCount=k;
     if(revealedCount>=folders.length && !revealHandedOff){
       revealHandedOff=true;
       setTimeout(function(){
         folders.forEach(function(f){f.classList.remove('dealing');});
         if(!reduceMotion){ layout(); lightRAF=requestAnimationFrame(lightLoop); }
-      },1500);
+      },1400);
+    } else if(revealedCount<folders.length){
+      revealHandedOff=false;
     }
   }
-  function onRevealScroll(){
-    if(!scrollRevealOn||!drawerStage)return;
-    var r=drawerStage.getBoundingClientRect();
-    var pinLen=revealBudget();                       // stable: matches the budget sizeStage() reserves
-    var p=pinLen>0 ? (96 - r.top)/pinLen : 1;
-    if(p<0)p=0; if(p>1)p=1;
-    var k=Math.max(1, Math.round(p*folders.length));
-    revealUpTo(k);
+
+  // The per-frame controller: positions the drawer and drives the reveal.
+  function pinFrame(){
+    if(pinArmed && drawerStage && !reduceMotion){
+      const y=window.scrollY;
+      const len=revealBudget();
+      if(y < pinStartY){
+        // above the zone: normal flow, folders tucked away (pre-deal state)
+        if(drawer.classList.contains('pin-fixed')||drawer.classList.contains('pin-after')){
+          drawer.classList.remove('pin-fixed','pin-after');
+          drawer.style.left=''; drawer.style.width='';
+        }
+        revealUpTo(0);
+      } else if(y >= pinStartY && y <= pinStartY+len){
+        // inside the zone: lock to the viewport and reveal by progress
+        if(!drawer.classList.contains('pin-fixed')){
+          drawer.classList.remove('pin-after');
+          drawer.classList.add('pin-fixed');
+        }
+        drawer.style.left=stageLeft+'px';
+        drawer.style.width=stageWidth+'px';
+        const p=len>0 ? (y - pinStartY)/len : 1;      // 0..1 progress through the pin
+        const k=Math.max(1, Math.ceil(p*folders.length));
+        revealUpTo(k);
+      } else {
+        // past the zone: park the drawer at the bottom of the stage, fully revealed
+        if(!drawer.classList.contains('pin-after')){
+          drawer.classList.remove('pin-fixed');
+          drawer.classList.add('pin-after');
+          drawer.style.left=''; drawer.style.width='';
+        }
+        revealUpTo(folders.length);
+      }
+    }
+    requestAnimationFrame(pinFrame);
   }
+  requestAnimationFrame(pinFrame);
+
+  // Measure now and keep measurements fresh as things settle / resize.
+  measurePin();
+  try{ if(window.ResizeObserver){ new ResizeObserver(function(){ measurePin(); }).observe(drawer); } }catch(e){}
+  window.addEventListener('load', measurePin);
+  setTimeout(measurePin, 400);
+
   function startScrollReveal(){
-    folders.forEach(function(f,i){ f.style.setProperty('--predealY',(90+i*34)+'px'); f.classList.add('dealing'); });
-    sizeStage();
-    scrollRevealOn=true;
-    // keep the pinned stage exactly as tall as the drawer needs, even as images / layout settle,
-    // so the reveal fraction stays accurate no matter when things finish loading
-    try{ if(window.ResizeObserver){ new ResizeObserver(function(){ sizeStage(); }).observe(drawer); } }catch(e){}
-    window.addEventListener('load', sizeStage);
-    setTimeout(sizeStage, 400);
-    window.addEventListener('scroll', onRevealScroll, {passive:true});
-    try{ if(typeof lenis!=='undefined' && lenis && lenis.on){ lenis.on('scroll', onRevealScroll); } }catch(e){}
-    onRevealScroll();
+    if(pinArmed) return;            // idempotent — only arm once
+    drawer.classList.remove('booting');
+    // Snap any leftover boot transform to none instantly (no easing) so the pin geometry
+    // is exact from the very first pinned frame, rather than drifting as a transition settles.
+    var prevT=drawer.style.transition;
+    drawer.style.transition='none';
+    drawer.style.transform='none';
+    void drawer.offsetHeight;       // force reflow so the snap takes effect now
+    drawer.style.transition=prevT;
+    folders.forEach(function(f,i){ f.style.setProperty('--predealY',(90+i*34)+'px'); f.classList.add('dealing'); f.classList.add('predeal'); f.style.transform='translateY('+((90+i*34))+'px)'; });
+    revealedCount=0;
+    measurePin();
+    pinArmed=true;                 // hand control to the per-frame pin
   }
   function bootSequence(){
     if(reduceMotion){
@@ -1268,6 +1364,9 @@
       }, 1000);
       setTimeout(startScrollReveal, 1160);
     });
+    // Safety net: arm the pin on a hard timer regardless of whether the boot
+    // type-animation callback fires, so the drawer is always pinnable.
+    setTimeout(function(){ drawer.classList.remove('booting'); startScrollReveal(); }, 2600);
   }
   bootSequence();
   window.addEventListener('resize',function(){layout();sizeStage();});

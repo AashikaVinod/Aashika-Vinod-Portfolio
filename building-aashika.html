@@ -229,7 +229,14 @@
   }
   @keyframes railNudge{0%,100%{transform:translateX(0);opacity:.55;}50%{transform:translateX(4px);opacity:.95;}}
   /* touch devices can't hover, so reveal the card preview image by default (matches desktop hover) */
-  @media (hover:none){ .mod-preview{opacity:1;} }
+  @media (hover:none){
+    .mod-preview{opacity:1;}
+    /* the preview is always on here, so the title needs a stronger backing than the desktop
+       hover gradient to stay legible over busy images */
+    .mod-preview::after{background:linear-gradient(180deg,rgba(24,33,45,.55) 0%,rgba(24,33,45,.12) 34%,rgba(24,33,45,.55) 66%,rgba(24,33,45,.96) 100%);}
+    .mod-title{text-shadow:0 1px 6px rgba(16,22,30,.85),0 0 2px rgba(16,22,30,.7);}
+    .mod-spec{text-shadow:0 1px 4px rgba(16,22,30,.8);}
+  }
   @media (max-width:860px){
     .dsr-dialog{width:92vw;height:88vh;max-height:none;border-radius:14px;}
     .dsr-body{flex-direction:column;}
