@@ -768,6 +768,7 @@
   // once-per-session: on repeat visits skip the loader + boot and reveal the page immediately
   function fastReveal(){
     bootDone=true;
+    if(hintText)hintText.classList.remove('visible');  /* skip-intro must clear the "move your cursor" prompt, like activate()/mobileReveal() */
     try{window.__avBooted=true;document.dispatchEvent(new Event('av:booted'));}catch(e){}
     try{loader.classList.add('done');loader.style.display='none';}catch(e){}
     try{osWindows.concat(osFrags).forEach(function(el){if(el)el.style.display='none';});}catch(e){}
