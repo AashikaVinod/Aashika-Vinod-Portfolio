@@ -3,16 +3,29 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Aashika Vinod · Playground</title>
+<title>Playground &middot; Design Experiments &middot; Aashika Vinod</title>
+<meta name="description" content="Design experiments, interaction studies, creative coding, and prototypes by Aashika Vinod.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Aashika Vinod","jobTitle":"Designer, Engineer & Researcher","url":"https://aashikavinod.github.io/Aashika-Vinod-Portfolio/","sameAs":["https://www.linkedin.com/in/aashika-vinod-391161302","https://www.behance.net/aashikav2","https://github.com/AashikaVinod"]}
+</script>
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
 <link rel="stylesheet" href="https://unpkg.com/lenis@1.3.25/dist/lenis.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="preconnect" href="https://unpkg.com">
+<link rel="dns-prefetch" href="https://unpkg.com">
+<link rel="dns-prefetch" href="https://www.behance.net">
+<link rel="dns-prefetch" href="https://www.linkedin.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Roboto:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap">
+<script src="content/media.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Roboto:wght@400;500&family=JetBrains+Mono:wght@400;500&display=swap');
-  :root{
+    :root{--green:#8CC6A9;--purple:#C9A0DC;--red-rgb:232,93,93;--cream-rgb:245,242,237;--navy-rgb:30,42,58;--red:#E85D5D;--navy:#1E2A3A;--cream:#F5F2ED;
     --cream:#F5F2ED;--white:#FFF;--navy:#1E2A3A;--gray:#5A6470;--blue:#B4D0DC;--blue-line:#7FA5B5;--red:#E85D5D;--line:#D9D5CE;
     --c-dev:#7FA5B5;--c-visual:#E85D5D;--c-art:#C9A0DC;--c-concept:#E0A458;--c-research:#8CC6A9;
     --bg:#F5F2ED;--ink:#1E2A3A;--ink-soft:#5A6470;--hair:#D9D5CE;
@@ -32,25 +45,25 @@
   body{background:var(--bg);color:var(--ink);font-family:'Roboto',sans-serif;cursor:none;overflow-x:clip;
     transition:background .8s var(--ease-io),color .8s ease;}
   @media (pointer:coarse){body{cursor:auto;}}
-  body.deep{--bg:#1E2A3A;--ink:#F5F2ED;--ink-soft:rgba(245,242,237,.6);--hair:rgba(245,242,237,.14);}
+  body.deep{--bg:var(--navy);--ink:var(--cream);--ink-soft:rgba(var(--cream-rgb),.6);--hair:rgba(var(--cream-rgb),.14);}
 
   /* ===== ENVIRONMENT: the drawer lives inside a space, not on a blank page ===== */
   .env{position:fixed;inset:0;background:var(--bg);z-index:-4;transition:background .9s var(--ease-io);}
   /* a large ambient room light that slowly drifts on its own (alive on arrival) */
   .env-light{position:fixed;inset:-20% -10%;z-index:-3;pointer-events:none;
     background:radial-gradient(60% 55% at 30% 22%, var(--amb1,rgba(180,208,220,.20)), transparent 60%),
-               radial-gradient(50% 50% at 78% 70%, var(--amb2,rgba(232,93,93,.10)), transparent 62%);
+               radial-gradient(50% 50% at 78% 70%, var(--amb2,rgba(var(--red-rgb),.10)), transparent 62%);
     filter:blur(30px);opacity:.9;transition:background 1.1s ease, opacity .9s ease;will-change:transform;}
   body.deep .env-light{--amb1:rgba(127,165,181,.22);--amb2:rgba(180,208,220,.10);opacity:1;}
   /* per-category environment tint — targets the light element so it wins over .deep default */
   body[data-cat="development"] .env-light{--amb1:rgba(127,165,181,.34);--amb2:rgba(127,165,181,.12);}
-  body[data-cat="visual"] .env-light{--amb1:rgba(232,93,93,.26);--amb2:rgba(232,93,93,.12);}
+  body[data-cat="visual"] .env-light{--amb1:rgba(var(--red-rgb),.26);--amb2:rgba(var(--red-rgb),.12);}
   body[data-cat="art"] .env-light{--amb1:rgba(201,160,220,.30);--amb2:rgba(201,160,220,.12);}
   body[data-cat="concepts"] .env-light{--amb1:rgba(224,164,88,.28);--amb2:rgba(224,164,88,.12);}
   body[data-cat="research"] .env-light{--amb1:rgba(140,198,169,.28);--amb2:rgba(140,198,169,.12);}
   /* soft depth vignette so the space recedes at the edges */
   .env-vignette{position:fixed;inset:0;z-index:-2;pointer-events:none;
-    background:radial-gradient(120% 90% at 50% 42%, transparent 52%, rgba(30,42,58,.10) 100%);
+    background:radial-gradient(120% 90% at 50% 42%, transparent 52%, rgba(var(--navy-rgb),.10) 100%);
     transition:background .9s ease;}
   body.deep .env-vignette{background:radial-gradient(120% 90% at 50% 42%, transparent 46%, rgba(0,0,0,.5) 100%);}
   .blueprint-grid{position:fixed;inset:0;z-index:-1;pointer-events:none;
@@ -96,7 +109,13 @@
 
   .p-head{margin-bottom:30px;}
   .p-title{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(36px,5.6vw,64px);letter-spacing:-.03em;line-height:1;}
-  .p-title .dot{color:var(--red);}
+  .p-title .mark{display:inline-block;width:.32em;height:.32em;position:relative;margin-left:.1em;vertical-align:.05em;transform-style:preserve-3d;}
+  .p-title .mark i{position:absolute;inset:0;border-radius:50%;border:.05em solid var(--red);}
+  .p-title .mark i:nth-child(1){animation:markSpinY 2.8s linear infinite;}
+  .p-title .mark i:nth-child(2){animation:markSpinX 3.4s linear infinite;opacity:.55;}
+  @keyframes markSpinY{from{transform:rotateY(0);}to{transform:rotateY(360deg);}}
+  @keyframes markSpinX{from{transform:rotateX(0);}to{transform:rotateX(360deg);}}
+  @media (prefers-reduced-motion: reduce){.p-title .mark i{animation:none;}.p-title .mark i:nth-child(2){transform:rotate(90deg);}}
   .p-sub{font-family:'Roboto',sans-serif;font-size:15px;line-height:1.55;color:var(--ink-soft);max-width:440px;margin-top:12px;transition:color .3s ease;}
 
   .drawer-cmd{font-family:'JetBrains Mono',monospace;font-size:12.5px;letter-spacing:.02em;color:var(--ink-soft);margin-bottom:14px;min-height:18px;transition:color .3s ease;}
@@ -108,32 +127,38 @@
      THE DRAWER
      ============================================================ */
   .drawer-stage{position:relative;}
-  .drawer{position:sticky;top:96px;border-radius:18px;padding:24px 24px 28px;
+  /* The drawer sticks to the viewport (native position:sticky) while its stage scrolls past, so the
+     folders deal in while it is held in view, then it releases naturally. This works with the smooth
+     scroll library (which uses native scroll) and can never be outrun. When a case study is open the
+     pin is released so the expanded layout can flow and scroll freely. */
+  .drawer{position:sticky;top:var(--pin-top,90px);z-index:2;border-radius:18px;padding:24px 24px 28px;
     background:linear-gradient(177deg,#f4eee4,#e7e0d3 55%,#ddd3c2);
     border:1px solid #d6cdbd;border-top-color:#efe9dd;
     box-shadow:
       inset 0 2px 0 rgba(255,255,255,.85),          /* top rim highlight */
-      inset 0 -1px 0 rgba(30,42,58,.10),             /* bottom inner edge */
-      inset 0 -30px 60px rgba(30,42,58,.09),         /* interior depth */
-      inset 6px 0 22px rgba(30,42,58,.05),           /* left wall */
-      inset -6px 0 22px rgba(30,42,58,.05),          /* right wall */
+      inset 0 -1px 0 rgba(var(--navy-rgb),.10),             /* bottom inner edge */
+      inset 0 -30px 60px rgba(var(--navy-rgb),.09),         /* interior depth */
+      inset 6px 0 22px rgba(var(--navy-rgb),.05),           /* left wall */
+      inset -6px 0 22px rgba(var(--navy-rgb),.05),          /* right wall */
       0 2px 1px rgba(255,255,255,.5),                /* crisp top edge */
-      0 22px 40px -18px rgba(30,42,58,.30),          /* near shadow */
-      0 60px 120px -30px rgba(30,42,58,.34);         /* far cast shadow (raised object) */
+      0 22px 40px -18px rgba(var(--navy-rgb),.30),          /* near shadow */
+      0 60px 120px -30px rgba(var(--navy-rgb),.34);         /* far cast shadow (raised object) */
     transition:background .9s var(--ease-io),border-color .9s ease,box-shadow .9s ease;
     overflow:hidden;}
   body.deep .drawer{background:linear-gradient(177deg,#293c54,#1d2a3b 55%,#16212e);border-color:#31445c;border-top-color:#3b5171;
     box-shadow:
-      inset 0 2px 0 rgba(245,242,237,.08),
+      inset 0 2px 0 rgba(var(--cream-rgb),.08),
       inset 0 -1px 0 rgba(0,0,0,.4),
       inset 0 -30px 66px rgba(0,0,0,.40),
       inset 6px 0 26px rgba(0,0,0,.24),
       inset -6px 0 26px rgba(0,0,0,.24),
-      0 2px 1px rgba(245,242,237,.05),
+      0 2px 1px rgba(var(--cream-rgb),.05),
       0 26px 46px -18px rgba(0,0,0,.5),
       0 70px 140px -30px rgba(0,0,0,.6);}
-  .drawer::after{content:'';position:absolute;left:0;right:0;bottom:0;height:22px;background:linear-gradient(180deg,rgba(30,42,58,.11),transparent);pointer-events:none;}
+  .drawer::after{content:'';position:absolute;left:0;right:0;bottom:0;height:22px;background:linear-gradient(180deg,rgba(var(--navy-rgb),.11),transparent);pointer-events:none;}
   body.deep .drawer::after{background:linear-gradient(180deg,rgba(0,0,0,.34),transparent);}
+  /* When a case study is open, release the pin so the expanded layout flows and scrolls freely. */
+  body.folder-open .drawer{position:relative;top:auto;}
 
   /* ===== SIGNATURE: cursor-tracked light-table ===== */
   /* a soft spotlight trails the cursor across the drawer; folders lift & warm by proximity */
@@ -162,7 +187,7 @@
   body.deep .rail-back{max-width:160px;opacity:1;padding-left:13px;padding-right:13px;margin-right:12px;}
   .rail-back:hover{background:color-mix(in srgb,var(--cat,var(--red)) 40%,transparent);}
   .rail-path{transition:opacity .3s ease;}
-  /* CATEGORY INDEX — the five folders shown together as one family; the lit pip marks
+  /* CATEGORY INDEX — the four folders shown together as one family; the lit pip marks
      where you are. Always present, so opening or switching reads as moving within one
      indexed drawer rather than entering a separate gallery. */
   .rail-cats{display:flex;align-items:center;gap:7px;position:relative;z-index:1;margin-left:2px;}
@@ -187,40 +212,40 @@
     display:flex;align-items:center;justify-content:center;opacity:0;
     background:
       linear-gradient(180deg, rgba(255,255,255,.5), rgba(255,255,255,0) 14%),
-      linear-gradient(180deg, rgba(30,42,58,.12), transparent 8%) bottom,
-      repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 2px, rgba(30,42,58,.03) 2px 4px),
+      linear-gradient(180deg, rgba(var(--navy-rgb),.12), transparent 8%) bottom,
+      repeating-linear-gradient(90deg, rgba(255,255,255,.04) 0 2px, rgba(var(--navy-rgb),.03) 2px 4px),
       linear-gradient(177deg,#e9e2d6,#d8cfbe);
-    box-shadow:inset 0 2px 0 rgba(255,255,255,.7), inset 0 -30px 60px rgba(30,42,58,.10);
+    box-shadow:inset 0 2px 0 rgba(255,255,255,.7), inset 0 -30px 60px rgba(var(--navy-rgb),.10);
     transition:opacity .6s var(--ease-out), transform .95s var(--ease-io);}
   .drawer.booting .drawer-closed{opacity:1;}
   /* machined pull handle — a real recessed grip */
   .drawer-closed .dc-handle{position:relative;width:132px;height:34px;border-radius:8px;
     background:linear-gradient(180deg,#c9c0ae,#b3aa97);
-    box-shadow:inset 0 2px 5px rgba(30,42,58,.35), inset 0 -1px 0 rgba(255,255,255,.5), 0 1px 0 rgba(255,255,255,.6);}
+    box-shadow:inset 0 2px 5px rgba(var(--navy-rgb),.35), inset 0 -1px 0 rgba(255,255,255,.5), 0 1px 0 rgba(255,255,255,.6);}
   .drawer-closed .dc-handle::after{content:'';position:absolute;left:14px;right:14px;top:50%;height:9px;transform:translateY(-50%);
     border-radius:5px;background:linear-gradient(180deg,#8f8674,#a49a86);
     box-shadow:inset 0 2px 4px rgba(0,0,0,.4);}
   /* label slot with the category index — like a real filing drawer label holder */
   .drawer-closed .dc-slot{position:absolute;top:26px;left:50%;transform:translateX(-50%);
     display:flex;align-items:center;gap:10px;padding:7px 16px;border-radius:4px;
-    background:rgba(255,255,255,.6);border:1px solid rgba(30,42,58,.14);
-    box-shadow:inset 0 1px 2px rgba(30,42,58,.12), 0 1px 0 rgba(255,255,255,.7);
-    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(30,42,58,.55);}
+    background:rgba(255,255,255,.6);border:1px solid rgba(var(--navy-rgb),.14);
+    box-shadow:inset 0 1px 2px rgba(var(--navy-rgb),.12), 0 1px 0 rgba(255,255,255,.7);
+    font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.16em;text-transform:uppercase;color:rgba(var(--navy-rgb),.74);}
   .drawer-closed .dc-slot .dc-swatches{display:flex;gap:4px;}
   .drawer-closed .dc-slot .dc-sw{width:7px;height:7px;border-radius:2px;}
-  .drawer-closed .dc-label{position:absolute;bottom:22px;left:24px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(30,42,58,.52);}
-  .drawer-closed .dc-meta{position:absolute;bottom:22px;right:24px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(30,42,58,.5);}
+  .drawer-closed .dc-label{position:absolute;bottom:22px;left:24px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.16em;text-transform:uppercase;color:rgba(var(--navy-rgb),.74);}
+  .drawer-closed .dc-meta{position:absolute;bottom:22px;right:24px;font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(var(--navy-rgb),.74);}
   /* pre-interaction category index: each domain names itself (colour + label) before you open anything */
   .drawer-closed .dc-cats{position:absolute;left:50%;bottom:56px;transform:translateX(-50%);display:flex;gap:9px;flex-wrap:wrap;justify-content:center;max-width:min(600px,88%);pointer-events:auto;z-index:3;}
-  .drawer-closed .dc-cat{display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:20px;background:rgba(255,255,255,.55);border:1px solid rgba(30,42,58,.12);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:rgba(30,42,58,.62);cursor:none;transition:border-color .25s ease,color .25s ease,background .25s ease,transform .3s var(--ease-out);}
-  .drawer-closed .dc-cat:hover{color:#1E2A3A;border-color:var(--cc);background:#fff;transform:translateY(-3px);}
+  .drawer-closed .dc-cat{display:inline-flex;align-items:center;gap:8px;padding:7px 13px;border-radius:20px;background:rgba(255,255,255,.55);border:1px solid rgba(var(--navy-rgb),.12);font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.07em;text-transform:uppercase;color:rgba(var(--navy-rgb),.62);cursor:none;transition:border-color .25s ease,color .25s ease,background .25s ease,transform .3s var(--ease-out);}
+  .drawer-closed .dc-cat:hover{color:var(--navy);border-color:var(--cc);background:#fff;transform:translateY(-3px);}
   .drawer-closed .dc-cat .cc-dot{width:8px;height:8px;border-radius:50%;background:var(--cc);flex:0 0 auto;box-shadow:0 0 0 3px color-mix(in srgb,var(--cc) 20%,transparent);}
   .drawer-closed .dc-cat .cc-c{opacity:.45;}
   /* corner screws for realism */
   .drawer-closed .dc-screw{position:absolute;width:8px;height:8px;border-radius:50%;
     background:radial-gradient(circle at 40% 35%, #cfc6b4, #8f8674);
-    box-shadow:inset 0 0 0 1px rgba(30,42,58,.15), 0 1px 1px rgba(255,255,255,.5);}
-  .drawer-closed .dc-screw::after{content:'';position:absolute;inset:2px;border-top:1px solid rgba(30,42,58,.35);top:50%;}
+    box-shadow:inset 0 0 0 1px rgba(var(--navy-rgb),.15), 0 1px 1px rgba(255,255,255,.5);}
+  .drawer-closed .dc-screw::after{content:'';position:absolute;inset:2px;border-top:1px solid rgba(var(--navy-rgb),.35);top:50%;}
   .drawer-closed .dc-screw.tl{top:16px;left:16px;} .drawer-closed .dc-screw.tr{top:16px;right:16px;}
   .drawer-closed .dc-screw.bl{bottom:16px;left:16px;} .drawer-closed .dc-screw.br{bottom:16px;right:16px;}
   /* a light sweep crosses the sealed front as it unseals */
@@ -248,7 +273,7 @@
   .folder.collapsed:hover .folder-tab{opacity:1;transform:scale(1);}
   .folder-shell{position:relative;border-radius:0 14px 14px 14px;overflow:hidden;max-height:640px;
     background:var(--white);border:1px solid var(--line);
-    box-shadow:0 14px 30px rgba(30,42,58,.14);transition:box-shadow .45s var(--ease-out),border-color .3s ease,max-height .55s var(--ease-out),opacity .4s ease;}
+    box-shadow:0 14px 30px rgba(var(--navy-rgb),.14);transition:box-shadow .45s var(--ease-out),border-color .3s ease,max-height .55s var(--ease-out),opacity .4s ease;}
   body.deep .folder .folder-shell{box-shadow:0 18px 44px rgba(0,0,0,.34);}
   .folder-tab{display:inline-flex;align-items:center;gap:8px;background:var(--cat);color:#fff;
     font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;
@@ -265,8 +290,18 @@
   .folder-face .ff-name{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:21px;letter-spacing:-.01em;color:var(--navy);display:block;}
   .folder-face .ff-desc{font-family:'Roboto',sans-serif;font-size:12.5px;line-height:1.45;color:var(--gray);margin-top:5px;display:block;max-width:340px;}
   .folder-face .ff-meta{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.05em;text-transform:uppercase;color:var(--gray);text-align:right;flex:0 0 auto;}
-  .folder-face .ff-open{display:block;color:var(--cat);opacity:0;transform:translateX(-4px);transition:opacity .25s ease,transform .25s ease;margin-top:5px;}
-  .folder.hot .ff-open{opacity:1;transform:translateX(0);}
+  .folder-face .ff-open{display:inline-flex;align-items:center;gap:5px;color:var(--cat);opacity:.5;transform:none;margin-top:8px;padding:3px 10px;border-radius:20px;border:1px solid transparent;background:transparent;transition:opacity .25s ease,transform .25s ease,background .25s ease,border-color .25s ease;}
+  .folder.hot .ff-open{opacity:1;transform:translateX(3px);}
+  /* Clear per-folder "clickable" state. The shelf under the cursor (:hover) OR under the light-table
+     glow (.lit, set by the loop) highlights toward its category colour and the open cue becomes a
+     lit pill, so it always reads as clickable. border/name/arrow are never written inline, so this
+     never fights the light-loop's proximity lift. */
+  .folder:hover .folder-shell,.folder.lit .folder-shell{border-color:var(--cat);}
+  .folder:hover .ff-name,.folder.lit .ff-name{color:var(--cat);}
+  .folder:hover .ff-open,.folder.lit .ff-open{opacity:1;transform:translateX(4px);background:color-mix(in srgb,var(--cat) 14%,transparent);border-color:color-mix(in srgb,var(--cat) 42%,transparent);}
+  .folder:hover .folder-tab,.folder.lit .folder-tab{filter:brightness(1.07) saturate(1.05);}
+  .folder:hover .ff-strip,.folder.lit .ff-strip{transform:scale(1.05);}
+  .folder .ff-strip{transition:transform .3s var(--ease-out);}
 
   .folder-detail{max-height:0;overflow:hidden;transition:max-height .68s var(--ease-out);
     background:linear-gradient(180deg,#243449,#1a2634);}
@@ -277,7 +312,7 @@
     opacity:0;transform:translateY(10px);transition:opacity .5s ease .12s,transform .6s var(--ease-out) .12s;}
   .folder.active .fd-head{opacity:1;transform:translateY(0);}
   .fd-title{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:25px;letter-spacing:-.02em;color:var(--cream);}
-  .fd-blurb{font-family:'Roboto',sans-serif;font-size:13px;color:rgba(245,242,237,.6);max-width:420px;margin-top:3px;}
+  .fd-blurb{font-family:'Roboto',sans-serif;font-size:13px;color:rgba(var(--cream-rgb),.6);max-width:420px;margin-top:3px;}
   .fd-count{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--cat);}
 
   /* ---------- FILMSTRIP: numbered frames, spec metadata, stacked & riffle ---------- */
@@ -317,9 +352,9 @@
   .photo .ph-img{height:150px;border-radius:3px;position:relative;overflow:hidden;
     background:linear-gradient(140deg,color-mix(in srgb,var(--cat) 42%,#cdd4da),color-mix(in srgb,var(--cat) 16%,#e8ebed));
     display:flex;align-items:center;justify-content:center;}
-  .photo .ph-img-inner{position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(30,42,58,.05) 0 8px,transparent 8px 16px);}
+  .photo .ph-img-inner{position:absolute;inset:0;background:repeating-linear-gradient(45deg,rgba(var(--navy-rgb),.05) 0 8px,transparent 8px 16px);}
   .photo .ph-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;z-index:0;}
-  .photo .ph-glyph{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(30,42,58,.4);position:relative;}
+  .photo .ph-glyph{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(var(--navy-rgb),.74);position:relative;}
   .photo .ph-cap{margin-top:11px;display:flex;align-items:baseline;justify-content:space-between;gap:8px;}
   .photo .ph-name{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:14px;color:var(--navy);line-height:1.15;}
   .photo .ph-num{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.06em;color:var(--gray);flex:0 0 auto;}
@@ -333,59 +368,59 @@
   .folder.viewing .fd-viewer{max-height:none;overflow:visible;opacity:1;pointer-events:auto;transform:scale(1);}
   .fd-inner{position:relative;}
   .vw-top{display:flex;align-items:center;gap:16px;margin-bottom:20px;}
-  .vw-back{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,242,237,.55);
-    background:rgba(245,242,237,.04);border:1px solid rgba(245,242,237,.14);border-radius:20px;padding:8px 15px;cursor:none;transition:color .25s var(--ease-io),border-color .25s var(--ease-io),background .25s var(--ease-io);}
+  .vw-back{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(var(--cream-rgb),.62);
+    background:rgba(var(--cream-rgb),.04);border:1px solid rgba(var(--cream-rgb),.14);border-radius:20px;padding:8px 15px;cursor:none;transition:color .25s var(--ease-io),border-color .25s var(--ease-io),background .25s var(--ease-io);}
   .vw-back:hover{color:var(--cream);border-color:var(--cat);background:color-mix(in srgb,var(--cat) 16%,transparent);}
-  .vw-crumb{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,242,237,.4);}
+  .vw-crumb{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(var(--cream-rgb),.62);}
   .vw-crumb b{color:var(--cat);font-weight:500;}
-  .vw-index{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;color:rgba(245,242,237,.5);}
+  .vw-index{margin-left:auto;font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.08em;color:rgba(var(--cream-rgb),.62);}
   .vw-index b{color:var(--cream);font-weight:500;}
   .vw-body{display:grid;grid-template-columns:1.7fr .95fr;gap:26px;align-items:start;}
   /* BIG STAGE — full and dramatic, ghost index number for editorial texture */
   .vw-stage{position:relative;border-radius:16px;overflow:hidden;aspect-ratio:16/10;
     background:linear-gradient(150deg,color-mix(in srgb,var(--cat) 32%,#243449),color-mix(in srgb,var(--cat) 8%,#151f2b));
-    box-shadow:0 30px 70px -20px rgba(0,0,0,.6), inset 0 0 0 1px rgba(245,242,237,.06);
+    box-shadow:0 30px 70px -20px rgba(0,0,0,.6), inset 0 0 0 1px rgba(var(--cream-rgb),.06);
     display:flex;align-items:center;justify-content:center;}
   .vw-stage::after{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;opacity:0;transition:opacity .5s var(--ease-out);
     background:radial-gradient(400px circle at var(--lx,50%) var(--ly,40%), rgba(255,240,214,.18), transparent 60%);mix-blend-mode:soft-light;}
   .vw-stage.lit::after{opacity:1;}
   .vw-stage .vw-bignum{position:absolute;left:24px;bottom:10px;z-index:1;font-family:'Space Grotesk',sans-serif;font-weight:500;
-    font-size:120px;line-height:.8;letter-spacing:-.04em;color:rgba(245,242,237,.06);pointer-events:none;}
+    font-size:120px;line-height:.8;letter-spacing:-.04em;color:rgba(var(--cream-rgb),.06);pointer-events:none;}
   .vw-slide{position:absolute;inset:0;display:flex;align-items:center;justify-content:center;opacity:0;transform:scale(1.05);
     transition:opacity .6s var(--ease-out),transform .8s var(--ease-out);}
   .vw-slide.on{opacity:1;transform:scale(1);}
-  .vw-slide .vs-cap{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,242,237,.5);
-    border:1px dashed rgba(245,242,237,.22);border-radius:8px;padding:10px 16px;background:rgba(21,31,43,.5);position:relative;z-index:2;}
+  .vw-slide .vs-cap{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:rgba(var(--cream-rgb),.62);
+    border:1px dashed rgba(var(--cream-rgb),.22);border-radius:8px;padding:10px 16px;background:rgba(21,31,43,.5);position:relative;z-index:2;}
   .vw-slide img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;padding:22px;z-index:1;}
-  .vw-slide.has-img .vs-cap{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);border-color:transparent;background:rgba(21,31,43,.72);color:rgba(245,242,237,.72);}
+  .vw-slide.has-img .vs-cap{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);border-color:transparent;background:rgba(21,31,43,.72);color:rgba(var(--cream-rgb),.72);}
   .vw-nav{position:absolute;top:50%;transform:translateY(-50%);width:42px;height:42px;border-radius:50%;
-    background:rgba(21,31,43,.92);border:1px solid rgba(245,242,237,.18);color:var(--cream);
+    background:rgba(21,31,43,.92);border:1px solid rgba(var(--cream-rgb),.18);color:var(--cream);
     display:flex;align-items:center;justify-content:center;cursor:none;font-size:17px;transition:background .25s var(--ease-io),border-color .25s var(--ease-io),transform .35s var(--ease-io);z-index:4;}
   .vw-nav:hover{background:var(--cat);border-color:var(--cat);}
   .vw-nav.prev{left:14px;}.vw-nav.prev:hover{transform:translateY(-50%) translateX(-2px);}
   .vw-nav.next{right:14px;}.vw-nav.next:hover{transform:translateY(-50%) translateX(2px);}
-  .vw-counter{position:absolute;top:14px;right:14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:rgba(245,242,237,.7);background:rgba(21,31,43,.9);padding:5px 11px;border-radius:12px;z-index:4;}
+  .vw-counter{position:absolute;top:14px;right:14px;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.1em;color:rgba(var(--cream-rgb),.7);background:rgba(21,31,43,.9);padding:5px 11px;border-radius:12px;z-index:4;}
   /* SPEC SIDEBAR — strong hierarchy, editorial spacing */
   .vw-panel{display:flex;flex-direction:column;}
   .vw-eyebrow{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.14em;text-transform:uppercase;color:var(--cat);margin-bottom:10px;}
   .vw-pname{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:30px;line-height:1.05;letter-spacing:-.025em;color:var(--cream);margin-bottom:16px;}
-  .vw-specs{border-top:1px solid rgba(245,242,237,.12);margin-bottom:18px;}
-  .vw-spec{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid rgba(245,242,237,.09);}
-  .vw-spec .sk{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(245,242,237,.4);flex:0 0 auto;padding-top:2px;}
+  .vw-specs{border-top:1px solid rgba(var(--cream-rgb),.12);margin-bottom:18px;}
+  .vw-spec{display:flex;justify-content:space-between;gap:14px;padding:11px 0;border-bottom:1px solid rgba(var(--cream-rgb),.09);}
+  .vw-spec .sk{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.1em;text-transform:uppercase;color:rgba(var(--cream-rgb),.62);flex:0 0 auto;padding-top:2px;}
   .vw-spec .sv{font-family:'Roboto',sans-serif;font-size:13px;color:var(--cream);text-align:right;display:flex;flex-wrap:wrap;gap:5px;justify-content:flex-end;}
   .vw-spec .m-tag{font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.05em;text-transform:uppercase;color:color-mix(in srgb,var(--cat) 78%,var(--cream));border:1px solid color-mix(in srgb,var(--cat) 32%,transparent);border-radius:4px;padding:3px 7px;}
-  .vw-pblurb{font-family:'Roboto',sans-serif;font-size:14px;line-height:1.65;color:rgba(245,242,237,.68);margin-bottom:22px;}
+  .vw-pblurb{font-family:'Roboto',sans-serif;font-size:14px;line-height:1.65;color:rgba(var(--cream-rgb),.68);margin-bottom:22px;}
   .vw-plink{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:#fff;background:var(--cat);border-radius:22px;padding:11px 20px;text-decoration:none;cursor:none;display:inline-flex;align-items:center;gap:8px;align-self:flex-start;
     transition:transform .3s var(--ease-io),box-shadow .3s var(--ease-io);box-shadow:0 8px 20px -6px color-mix(in srgb,var(--cat) 60%,transparent);}
   .vw-plink:hover{transform:translateY(-2px);box-shadow:0 14px 28px -6px color-mix(in srgb,var(--cat) 70%,transparent);}
-  .vw-plink.disabled{color:rgba(245,242,237,.4);background:rgba(245,242,237,.06);box-shadow:none;pointer-events:none;}
+  .vw-plink.disabled{color:rgba(var(--cream-rgb),.62);background:rgba(var(--cream-rgb),.06);box-shadow:none;pointer-events:none;}
   /* FILMSTRIP along the bottom — clean, full-width */
-  .vw-strip{grid-column:1 / -1;display:flex;gap:10px;margin-top:22px;padding-top:18px;border-top:1px solid rgba(245,242,237,.1);overflow-x:auto;scrollbar-width:none;}
+  .vw-strip{grid-column:1 / -1;display:flex;gap:10px;margin-top:22px;padding-top:18px;border-top:1px solid rgba(var(--cream-rgb),.1);overflow-x:auto;scrollbar-width:none;}
   .vw-strip::-webkit-scrollbar{display:none;}
   .vw-thumb{flex:0 0 auto;width:96px;height:60px;border-radius:8px;cursor:none;position:relative;overflow:hidden;
     background:linear-gradient(140deg,color-mix(in srgb,var(--cat) 34%,#243449),color-mix(in srgb,var(--cat) 8%,#1a2634));
-    border:1px solid rgba(245,242,237,.08);opacity:.45;transition:opacity .3s var(--ease-io),border-color .3s var(--ease-io),transform .3s var(--ease-io);}
-  .vw-thumb .vt-n{position:absolute;left:7px;bottom:5px;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.06em;color:rgba(245,242,237,.6);}
+    border:1px solid rgba(var(--cream-rgb),.08);opacity:.45;transition:opacity .3s var(--ease-io),border-color .3s var(--ease-io),transform .3s var(--ease-io);}
+  .vw-thumb .vt-n{position:absolute;left:7px;bottom:5px;font-family:'JetBrains Mono',monospace;font-size:8px;letter-spacing:.06em;color:rgba(var(--cream-rgb),.6);}
   .vw-thumb:hover{opacity:.8;transform:translateY(-3px);}
   .vw-thumb.on{opacity:1;border-color:var(--cat);box-shadow:0 6px 16px -4px color-mix(in srgb,var(--cat) 60%,transparent);}
 
@@ -406,12 +441,12 @@
   .footer-cta-block{margin-bottom:36px;}
   .footer-cta{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(36px,6vw,84px);letter-spacing:-.03em;line-height:1.05;color:var(--cream);margin-bottom:28px;}
   .footer-cta em{font-style:normal;color:var(--red);}
-  .footer-mail{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.04em;color:var(--cream);border:1px solid rgba(245,242,237,.3);border-radius:8px;padding:16px 28px;cursor:none;transition:border-color .3s ease,color .3s ease;}
+  .footer-mail{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.04em;color:var(--cream);border:1px solid rgba(var(--cream-rgb),.3);border-radius:8px;padding:16px 28px;cursor:none;transition:border-color .3s ease,color .3s ease;}
   .footer-mail:hover{border-color:var(--red);color:var(--red);}
   .footer-social{margin-top:8px;display:flex;gap:24px;justify-content:center;flex-wrap:wrap;}
-  .footer-social a{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgba(245,242,237,.6);text-decoration:none;cursor:none;transition:color .3s ease;}
+  .footer-social a{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgba(var(--cream-rgb),.6);text-decoration:none;cursor:none;transition:color .3s ease;}
   .footer-social a:hover{color:var(--red);}
-  .footer-meta{width:100%;margin-top:48px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(245,242,237,.4);flex-wrap:wrap;gap:8px;}
+  .footer-meta{width:100%;margin-top:48px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(var(--cream-rgb),.62);flex-wrap:wrap;gap:8px;}
   .sound-toggle{position:fixed;bottom:26px;right:26px;z-index:120;display:flex;align-items:center;gap:8px;cursor:none;
     font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.08em;text-transform:uppercase;color:var(--ink-soft);
     background:var(--bg);border:1px solid var(--hair);border-radius:20px;padding:8px 13px;transition:color .3s ease,border-color .3s ease;}
@@ -425,13 +460,44 @@
   @media (max-width:820px){
     .wrap{padding:104px 20px 90px;}
     .folder-face .ff-desc{display:none;}
-    .photo{width:118px;}
-    .photofan{height:200px;}
+    /* On narrow screens the desktop photo-fan can't fit: it spilled past both edges and clipped
+       the rotated captions (see the Art drawer). Stack the photos as full-width cards instead,
+       so each is shorter, wider, and fully contained. The inline --tx/--rot/--ty the fan sets
+       are overridden here, and the hover-lift is neutralised so it can't overflow on resize. */
+    .photofan{height:auto !important;display:flex;flex-direction:column;gap:16px;margin-top:6px;}
+    .photo{position:static;width:100%;margin-left:0;left:auto;top:auto;
+      --tx:0 !important;--ty:0 !important;--rot:0 !important;--enterRot:0 !important;--enterScale:1 !important;--enterY:22px !important;}
+    .photo .ph-img{height:220px;}
+    .photo .ph-photo{object-fit:cover;}
+    .folder.active .photo.settled:hover{transform:translate(0,0) rotate(0) scale(1) !important;
+      box-shadow:0 16px 38px rgba(0,0,0,.4),0 4px 10px rgba(0,0,0,.26);}
+    .folder.active .folder-detail{max-height:2600px;}
+    .folder.viewing .folder-detail{max-height:3000px;}
     .vw-body{grid-template-columns:1fr;}
     .logo-nav{left:20px;}.hud{right:20px;}
     .section-tag{display:none;}
+    /* give the drawer interior more room on narrow screens */
+    .drawer{padding:18px 16px 22px;}
+    /* the header row was clipping the "4 folders" count off the right edge — let it wrap and
+       keep the folder count on its own line so nothing is cut off */
+    .drawer-rail{flex-wrap:wrap;gap:8px;margin-bottom:20px;font-size:9px;letter-spacing:.08em;}
+    .drawer-rail .rail-path{flex:1 1 auto;min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap;}
+    .drawer-rail .rail-line{display:none;}
+    .drawer-cmd{font-size:11px;}
+    .folder-face{padding:13px 15px;min-height:78px;gap:12px;align-items:center;}
+    .folder-face .ff-name{font-size:18px;}
+    .folder-tab{font-size:9px;padding:7px 12px;}
   }
-  @media (max-width:560px){ .photo{width:120px;} }
+  @media (max-width:560px){
+    .photo{width:100%;}
+    .drawer{padding:16px 13px 20px;}
+    .folder-face .ff-strip{width:38px;height:38px;}
+    .folder-face .ff-strip svg{width:20px;height:20px;}
+    .folder-face .ff-name{font-size:16.5px;}
+    .folder-face .ff-meta{font-size:9px;}
+  }
+  @media (max-width:560px) and (min-width:0px){ .drawer-rail .rail-cats{display:none;} }
+
   @media (prefers-reduced-motion:reduce){
     *{animation:none !important;transition-duration:.001ms !important;transition-delay:0ms !important;}
     .folder.active .photo{opacity:1;
@@ -442,13 +508,13 @@
   /* footer nav: one clean row of links (never a wrapping wall of buttons) */
   /* footer nav: unified node cards, one row, identical on every page */
   .footer-nav{display:flex;flex-wrap:nowrap;gap:12px;width:100%;max-width:1120px;margin:0 auto 44px;padding:0;border:none;background:none;}
-  .footer-nav a{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:8px;padding:16px 16px 18px;border:1px solid rgba(245,242,237,.16);border-radius:10px;background:rgba(245,242,237,.02);text-decoration:none;cursor:none;transition:border-color .3s ease,background .3s ease,transform .3s var(--ease-out);}
-  .footer-nav a:hover{border-color:rgba(232,93,93,.55);background:rgba(245,242,237,.05);transform:translateY(-3px);}
-  .footer-nav a.active{border-color:var(--red);background:rgba(232,93,93,.1);cursor:default;}
+  .footer-nav a{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:8px;padding:16px 16px 18px;border:1px solid rgba(var(--cream-rgb),.16);border-radius:10px;background:rgba(var(--cream-rgb),.02);text-decoration:none;cursor:none;transition:border-color .3s ease,background .3s ease,transform .3s var(--ease-out);}
+  .footer-nav a:hover{border-color:rgba(var(--red-rgb),.55);background:rgba(var(--cream-rgb),.05);transform:translateY(-3px);}
+  .footer-nav a.active{border-color:var(--red);background:rgba(var(--red-rgb),.1);cursor:default;}
   .footer-nav a.active .fn-id{color:var(--red);}
-  .footer-nav .fn-id{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,242,237,.4);}
-  .footer-nav .fn-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:500;letter-spacing:-.01em;color:#F5F2ED;}
-  .footer-nav .fn-desc{font-family:'Roboto',sans-serif;font-size:11px;line-height:1.35;color:rgba(245,242,237,.5);}
+  .footer-nav .fn-id{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(var(--cream-rgb),.62);}
+  .footer-nav .fn-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:500;letter-spacing:-.01em;color:var(--cream);}
+  .footer-nav .fn-desc{font-family:'Roboto',sans-serif;font-size:11px;line-height:1.35;color:rgba(var(--cream-rgb),.62);}
   @media(max-width:820px){.footer-nav{flex-wrap:wrap;gap:10px;}.footer-nav a{flex:1 1 40%;}}
   /* keyboard focus: consistent on-brand ring. The site uses a custom cursor (cursor:none),
      so keyboard / assistive-tech users depend entirely on a clear, visible focus state. */
@@ -465,6 +531,22 @@
     .hero-name{font-size:clamp(38px,11vw,64px);}
   }
 
+  /* ===== V2 interaction affordances (consistent across pages) ===== */
+  .footer-social a{position:relative;padding-bottom:3px;}
+  .footer-social a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--red);opacity:.32;transition:opacity .3s ease;}
+  .footer-social a:hover::after,.footer-social a:focus-visible::after{opacity:1;}
+  .footer-mail{transition:border-color .3s ease,color .3s ease,transform .3s var(--ease-out,ease);}
+  .footer-mail:hover{transform:translateY(-2px);}
+  .footer-nav .fn-id{transition:color .3s ease;}
+  .footer-nav a:hover .fn-id{color:var(--red);}
+  a:focus-visible,button:focus-visible,[role="link"]:focus-visible,.folder:focus-visible,.node:focus-visible{outline:2px solid var(--red);outline-offset:3px;}
+  picture{display:contents}
+  /* A11y: 44px min tap target (invisible hit area, no layout shift) */
+  .footer-social a{position:relative;}
+  .footer-social a::before{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:100%;height:44px;min-width:44px;}
+  /* footer grid (blueprint) — matches the homepage grid behind the footer */
+  .p-footer::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(var(--blue-line) 1px,transparent 1px),linear-gradient(90deg,var(--blue-line) 1px,transparent 1px);background-size:40px 40px;opacity:.08;}
+  .p-footer>*{position:relative;z-index:1;}
 </style>
   <script src="content/site.js"></script>
   <script src="content/navigation.js"></script>
@@ -481,12 +563,13 @@
 <div class="section-tag">DIRECTORY / PLAYGROUND</div>
 <div class="hud"><span class="render-dot"></span><span id="hudText">MOUNTED</span></div>
 
+<main>
 <div class="wrap">
   <div class="breadcrumb"><a href="index.html">/root</a><span class="sep">/</span><span class="here">playground</span></div>
 
   <div class="p-head">
-    <h1 class="p-title">Playground<span class="dot">.</span></h1>
-    <p class="p-sub">A drawer of experiments. Five folders. Pull one out to see what's inside.</p>
+    <h1 class="p-title">Playground<span class="mark" aria-hidden="true"><i></i><i></i></span></h1>
+    <p class="p-sub">A drawer of experiments. Four folders. Pull one out to see what's inside.</p>
   </div>
 
   <div class="drawer-cmd" id="drawerCmd"></div>
@@ -501,7 +584,6 @@
           <span class="dc-sw" style="background:var(--c-dev)"></span>
           <span class="dc-sw" style="background:var(--c-visual)"></span>
           <span class="dc-sw" style="background:var(--c-art)"></span>
-          <span class="dc-sw" style="background:var(--c-concept)"></span>
           <span class="dc-sw" style="background:var(--c-research)"></span>
         </span>
       </span>
@@ -512,7 +594,7 @@
     </div>
     <div class="drawer-rail">
       <button class="rail-back" id="railBack" aria-label="Back to all folders">← all folders</button>
-      <span class="rail-path">drawer · /root/playground</span><span class="rail-line"></span><div class="rail-cats" id="railCats" aria-label="Category index"></div><span id="railState">5 folders</span></div>
+      <span class="rail-path">drawer · /root/playground</span><span class="rail-line"></span><div class="rail-cats" id="railCats" aria-label="Category index"></div><span id="railState">4 folders</span></div>
     <div class="stack" id="stack"><!-- folders injected --></div>
     <div class="drawer-foot">
       <span id="footText">CLOSED · MOVE OVER THE STACK · CLICK TO OPEN</span>
@@ -524,16 +606,18 @@
   <!-- FOOTER -->
   </div><!-- /.wrap -->
 
-  <footer class="p-footer">
+  </main>
+
+<footer class="p-footer">
   <div class="footer-inner">
     <div class="footer-explore reveal">
       <div class="fe-eyebrow">SECTION 04 / EXPLORE THE SYSTEM</div>
     </div>
             <nav class="footer-nav" aria-label="Explore">
       <a href="index.html"><span class="fn-id">NODE_00</span><span class="fn-name">Home</span><span class="fn-desc">Back to the start</span></a>
-      <a href="index.html#work" data-work><span class="fn-id">NODE_01</span><span class="fn-name">The Work</span><span class="fn-desc">Selected case studies</span></a>
+      <a href="index.html#work" data-work><span class="fn-id">NODE_01</span><span class="fn-name">Work</span><span class="fn-desc">Selected case studies</span></a>
       <a href="playground.html"><span class="fn-id">NODE_02</span><span class="fn-name">Playground</span><span class="fn-desc">Experiments &amp; builds</span></a>
-      <a href="building-aashika.html"><span class="fn-id">NODE_03</span><span class="fn-name">Building Aashika</span><span class="fn-desc">How I grew as a designer</span></a>
+      <a href="building-aashika.html"><span class="fn-id">NODE_03</span><span class="fn-name">Building Aashika</span><span class="fn-desc">Research, practice &amp; recognition</span></a>
       <a href="after-hours.html"><span class="fn-id">NODE_04</span><span class="fn-name">After Hours</span><span class="fn-desc">Off the clock</span></a>
     </nav>
     <div class="footer-cta-block">
@@ -566,7 +650,7 @@
   /* ---------- lenis (guarded) ---------- */
   let lenis=null;
   try{ if(typeof Lenis!=='undefined'){lenis=new Lenis({lerp:0.09});} }catch(e){lenis=null;}
-  function rafL(t){ if(lenis)lenis.raf(t); requestAnimationFrame(rafL); }
+  function rafL(t){ if(lenis)lenis.raf(t); scrollGate(); requestAnimationFrame(rafL); }
   requestAnimationFrame(rafL);
   const clamp=(v,a,b)=>Math.min(b,Math.max(a,v));
   const renderBar=document.getElementById('renderBar');
@@ -649,14 +733,6 @@
          cover:'images/playground/art-photo-1.jpg',
          slides:[{img:'images/playground/art-photo-1.jpg'},{img:'images/playground/art-photo-2.jpg'}]}
       ]},
-    // Concepts: coming soon
-    {id:'concepts',label:'Concepts',cat:'var(--c-concept)',desc:'Product ideas, speculative interfaces & thought experiments.',
-      ease:'var(--ease-spring)', stagger:120, entryY:70, entryRot:-10, entryScale:.88, dir:'center-out',
-      projects:[
-        {name:'Coming Soon', year:'2026', status:'In progress', tags:['concepts'], link:null,
-         blurb:"Concept work, product ideas and speculative interfaces. Coming soon.",
-         slides:[{cap:'coming soon'}]}
-      ]},
     // Research: papers & investigations
     {id:'research',label:'Research',cat:'var(--c-research)',desc:'Papers, observations & design investigations.',
       ease:'var(--ease-io)', stagger:50, entryY:34, entryRot:0, entryScale:.94, dir:'ltr',
@@ -672,7 +748,10 @@
   /* ---------- build ---------- */
   const stack=document.getElementById('stack');
   const FACE_H=150;   // taller folder panels (tab + tall face)
-  const STACK_STEP=52; // tighter overlap = more stacked, longer deck
+  let STACK_STEP=52; // filing-cabinet overlap — same stacked look on every screen, just scaled
+  function pgStep(){ return window.innerWidth < 620 ? 44 : 52; }
+  function deckReserve(){ return window.innerWidth < 620 ? 118 : (FACE_H + 44); }
+  STACK_STEP=pgStep();
   const FAN_STEP=132;
   const TAB_H=30;
 
@@ -680,7 +759,7 @@
     const pending=p.status==='indexing';
     const cover=p.cover||(p.slides&&p.slides[0]&&p.slides[0].img)||'';
     return `<button class="photo${pending?' pending':''}" data-k="${k}" tabindex="-1">
-      <span class="ph-img">${cover?'<img class="ph-photo" src="'+cover+'" alt="">':'<span class="ph-img-inner"></span><span class="ph-glyph">'+(pending?'no preview':'')+'</span>'}<span class="ph-open">open<span class="oa-arrow">→</span></span></span>
+      <span class="ph-img">${cover?window.picHTML(cover,{cls:'ph-photo',alt:(p.name||'project cover')}):'<span class="ph-img-inner"></span><span class="ph-glyph">'+(pending?'no preview':'')+'</span>'}<span class="ph-open">open<span class="oa-arrow">→</span></span></span>
       <span class="ph-cap"><span class="ph-name">${p.name}</span><span class="ph-num">${num(k+1)}</span></span>
       <span class="ph-meta"><span class="ph-dot"></span>${pending?'indexing':p.year}</span>
     </button>`;
@@ -749,7 +828,18 @@
       ph.style.zIndex=10+k;
     });
   });
+  // shelves start hidden; the scroll-scrubbed reveal fades them in (reduced-motion shows them at rest)
+  if(!reduceMotion) folders.forEach(f=>{ f.style.opacity='0'; });
   let activeIdx=-1;
+  // Scroll-scrubbed reveal state: the drawer pins, then the shelves fade in one-by-one as it is
+  // scrolled, and the pin holds until they are all in. drawerOpen gates the reveal behind the boot;
+  // revealMaxP is one-way so shelves never fade back out; pgPinRoom/pgRevealScroll come from sizeStage.
+  // scroll-reveal state. revealShown is the EASED shown progress (see the reveal loop): it tracks the
+  // scroll-derived target but climbs no faster than a fixed wall-clock rate, so a single very large
+  // scroll delta can never complete (and thus dismiss) the reveal in one frame. Time-based (not
+  // per-frame) so the minimum reveal duration is the same at 30Hz, 60Hz or 144Hz.
+  let revealDone=false, revealMaxP=0, revealShown=0, revLastTs=0, drawerOpen=false, pgPinRoom=0, pgRevealScroll=0;
+  const REVEAL_MIN_MS=480; // shortest the full reveal can play, even on an instant scroll jump
   const TAB_STRIP=38;  // height a collapsed folder occupies (just its tab + gap)
   function layout(){
     const n=folders.length;
@@ -791,15 +881,20 @@
         f.classList.add('lightdriven');
         if(reduceMotion){ f.style.transform=`translateY(${i*STACK_STEP}px)`; }
         f.style.zIndex=10+i;
-        f.style.opacity='1'; f.style.filter='none';
+        if(revealDone){ f.style.opacity='1'; f.style.filter='none'; }
       });
-      stack.style.height=((n-1)*STACK_STEP + FACE_H + 44)+'px';
+      stack.style.height=((n-1)*STACK_STEP + deckReserve())+'px';
     }
   }
 
   /* ---------- interaction ---------- */
   const body=document.body;
   const footText=document.getElementById('footText');
+  // touch has no cursor to sweep the stack; folders reveal on scroll instead, so word the closed
+  // status for touch rather than telling users to "move over the stack".
+  var PG_TOUCH=(function(){try{return (window.matchMedia&&(window.matchMedia('(hover:none)').matches||window.matchMedia('(pointer:coarse)').matches))||('ontouchstart' in window)||(navigator.maxTouchPoints>0);}catch(e){return false;}})();
+  var CLOSED_STATUS=PG_TOUCH?'CLOSED · TAP A FOLDER TO OPEN':'CLOSED · MOVE OVER THE STACK · CLICK TO OPEN';
+  if(footText)footText.textContent=CLOSED_STATUS;
   const railState=document.getElementById('railState');
   function openFolder(idx){
     const meta=CATS[idx];
@@ -808,6 +903,19 @@
     // move reads as one deliberate transition rather than two overlapping states
     if(!wasClosed && activeIdx!==idx){ const prev=folders[activeIdx]; if(prev.classList.contains('viewing')) closeViewer(prev); }
     activeIdx=idx;
+    document.body.classList.add('folder-open');   // release the sticky pin so the open layout flows
+    if(typeof sizeStage==='function') sizeStage();  // clear the reserved pin room while open
+    // First open only: clearing the reserved pin room shrinks the page, so any scroll built up
+    // revealing the drawer would land past the new bottom (drawer above the viewport). Re-anchor the
+    // drawer to the pin line after the reflow so the opened case study lands accurately in view.
+    if(wasClosed){
+      requestAnimationFrame(function(){ requestAnimationFrame(function(){
+        var dEl=document.getElementById('drawer'); if(!dEl) return;
+        var target=Math.max(0, dEl.getBoundingClientRect().top + window.scrollY - PIN_TOP);
+        if(lenis && typeof lenis.scrollTo==='function') lenis.scrollTo(target,{immediate:true,force:true});
+        else window.scrollTo(0,target);
+      }); });
+    }
     document.querySelectorAll('.photo').forEach(pp=>pp.setAttribute('tabindex','-1'));
     folders[idx].querySelectorAll('.photo').forEach(pp=>pp.setAttribute('tabindex','0'));
     if(typeof syncRailCats==='function') syncRailCats();
@@ -875,16 +983,18 @@
   function closeAll(){
     if(activeIdx>=0) closeViewer(folders[activeIdx]); // reset any open carousel
     activeIdx=-1;
+    document.body.classList.remove('folder-open');
     document.querySelectorAll('.photo').forEach(pp=>pp.setAttribute('tabindex','-1'));
     if(typeof syncRailCats==='function') syncRailCats();
     folders.forEach(f=>{f.classList.remove('active');f.classList.remove('viewing');});
     body.classList.remove('deep');
     delete body.dataset.cat;
     body.style.removeProperty('--cat');
-    footText.textContent='CLOSED · MOVE OVER THE STACK · CLICK TO OPEN';
+    footText.textContent=CLOSED_STATUS;
     railState.textContent=CATS.length+' folders';
     playClose();
     layout();
+    if(typeof sizeStage==='function') sizeStage(); // restore the sticky pin room now the drawer is closed
   }
 
   /* ---------- CAROUSEL VIEWER ---------- */
@@ -894,8 +1004,8 @@
     const viewer=folderEl.querySelector('.fd-viewer');
     viewState={folder:folderEl,cat,catIdx,projK,slide:0};
     const slides=proj.slides||[{cap:'no preview'}];
-    const slidesHTML=slides.map((s,si)=>`<div class="vw-slide${si===0?' on':''}${s.img?' has-img':''}" data-si="${si}">${s.img?'<img src="'+s.img+'" alt="'+proj.name+' — '+(si+1)+'">':''}${s.cap?'<span class="vs-cap">'+s.cap+'</span>':''}</div>`).join('');
-    const thumbsHTML=slides.map((s,si)=>`<button class="vw-thumb${si===0?' on':''}" data-si="${si}"><span class="vt-n">${num(si+1)}</span></button>`).join('');
+    const slidesHTML=slides.map((s,si)=>`<div class="vw-slide${si===0?' on':''}${s.img?' has-img':''}" data-si="${si}">${s.img?window.picHTML(s.img,{alt:proj.name+' \u2014 slide '+(si+1),sizes:'(max-width: 900px) 92vw, 900px'}):''}${s.cap?'<span class="vs-cap">'+s.cap+'</span>':''}</div>`).join('');
+    const thumbsHTML=slides.map((s,si)=>`<button class="vw-thumb${si===0?' on':''}" data-si="${si}" aria-label="Slide ${si+1}"><span class="vt-n">${num(si+1)}</span></button>`).join('');
     const tags=(proj.tags||[]).map(t=>`<span class="m-tag">${t}</span>`).join('');
     const linkHTML=proj.link
       ? `<a class="vw-plink" href="${proj.link}" target="_blank" rel="noopener">${proj.linkLabel||'visit project'} <span>↗</span></a>`
@@ -1084,6 +1194,42 @@
     glow.style.transform=`translate(${(lightX*r.width).toFixed(1)}px, ${(lightY*r.height).toFixed(1)}px) translate(-50%,-50%)`;
 
     if(activeIdx<0 && !reduceMotion){
+     if(!revealDone){
+      // ---- PHASE 1: scroll-scrubbed reveal ----------------------------------------------------
+      // The shelves fade in one-by-one as a pure function of how far the pinned drawer has been
+      // scrolled. revealMaxP only ever increases, so shelves never fade back out on a scroll-up, and
+      // because the pin room is sized to the full reveal the reader cannot pass the section until done.
+      if(drawerOpen){
+        const sr=drawerStage.getBoundingClientRect();
+        const pin=pgPinRoom||1;
+        const p=Math.min(1,Math.max(0,(PIN_TOP - sr.top)/pin));
+        revealMaxP=Math.max(revealMaxP,p);
+        const revEnd=pin>0?(pgRevealScroll/pin):1;               // fraction of the pin over which shelves reveal
+        const pTarget=revEnd>0?Math.min(1,revealMaxP/revEnd):1;  // where the scroll POSITION says we should be
+        // Ease the shown progress toward that target at a capped WALL-CLOCK rate. A fast wheel/trackpad
+        // flick can jump the target to 1 in a single frame, but the shelves still fade in over at least
+        // REVEAL_MIN_MS rather than snapping. Slow scrolling advances the target more slowly than the cap,
+        // so shown === target and the crisp scrubbed feel is unchanged. dt is clamped so a stalled tab
+        // resuming can't jump the reveal, and so the pace holds at any refresh rate. The scroll gate keeps
+        // the pinned drawer in view while this plays out, so the reveal can never be outrun.
+        const nowTs=ts||0;
+        const dt=revLastTs?Math.min(64,nowTs-revLastTs):16; revLastTs=nowTs;
+        revealShown=Math.min(pTarget, revealShown + dt/REVEAL_MIN_MS);
+        const pr=revealShown;                                    // 0..1 across all shelves
+        const n=folders.length, seg=1/n;
+        for(let i=0;i<n;i++){
+          const fp=Math.min(1,Math.max(0,(pr-i*seg)/seg));
+          const e=1-Math.pow(1-fp,3);                            // ease-out per shelf
+          const f=folders[i];
+          f.style.opacity=e.toFixed(3);
+          f.style.transform=`translateY(${(i*STACK_STEP+(1-e)*30).toFixed(1)}px) scale(${(0.96+0.04*e).toFixed(4)})`;
+          f.style.filter=e<0.999?`blur(${((1-e)*4).toFixed(2)}px)`:'none';
+          f.style.zIndex=10+i;
+        }
+        if(pr>=0.999){ revealDone=true; folders.forEach(function(ff){ ff.style.transition=''; ff.style.filter='none'; ff.classList.add('lightdriven'); }); }
+      }
+     } else {
+      // ---- PHASE 2: light-table hover (folders lift toward the cursor to read as clickable) -----
       const stackR=stack.getBoundingClientRect();
       const drawerR=drawerEl.getBoundingClientRect();
       const lightPxY = lightY*drawerR.height + (drawerR.top - stackR.top); // light Y relative to stack top
@@ -1115,10 +1261,13 @@
         if(shell) shell.style.boxShadow = lift>0.02
           ? `0 ${(14+lift*22).toFixed(0)}px ${(30+lift*30).toFixed(0)}px rgba(30,42,58,${(0.14+lift*0.16).toFixed(2)})`
           : '';
+        // mark the folder currently under the light so the CSS can surface a clear "click to open" cue
+        f.classList.toggle('lit', lift>0.35);
         if(lift>topLitVal){topLitVal=lift;topLit=i;}
       });
       // raise the most-lit folder above its neighbours
       folders.forEach((f,i)=>{ f.style.zIndex = (i===topLit && topLitVal>0.15) ? 30 : 10+i; });
+     }
     }
     lightRAF=requestAnimationFrame(lightLoop);
   }
@@ -1181,69 +1330,83 @@
 
   /* ===== ENTRANCE STORY ===== */
   const drawerClosed=document.getElementById('drawerClosed');
-  function dealFolders(){
-    // each folder floats up slowly from a depth-staggered start (parallax)
-    folders.forEach((f,i)=>{
-      f.style.setProperty('--predealY', (90 + i*34)+'px'); // deeper folders start further down
-      f.classList.add('dealing');
-      setTimeout(()=>{
-        f.style.transform=`translateY(${i*STACK_STEP}px)`; // float into the stack
-        f.classList.remove('predeal');
-        playTick();
-      }, 120 + i*230);   // slower, more spaced stagger
-    });
-    // once dealt, hand positioning to the light loop and drop the dealing transition
-    const total=120 + (folders.length-1)*230 + 1500;
-    setTimeout(()=>{ folders.forEach(f=>f.classList.remove('dealing')); if(!reduceMotion)lightRAF=requestAnimationFrame(lightLoop); }, total + 120);
-  }
-  // ---- scroll-pinned folder reveal: the drawer stays pinned while folders float in
-  //      one by one, so the reveal can't be accidentally scrolled past ----
+  // ---- scroll-pinned folder reveal ---------------------------------------
+  // The drawer is pinned and the folders deal in one-by-one AS YOU SCROLL.
+  // This is driven every animation frame (not by scroll events), and the pin is
+  // applied by JS (position:fixed) rather than CSS sticky — so a fast flick can
+  // never outrun it: the drawer's on-screen position and the reveal count are both
+  // pure functions of the scroll position, recomputed on every single frame.
   const drawerStage=document.getElementById('drawerStage');
-  const REVEAL_STEP=150;
-  function revealBudget(){ return folders.length*REVEAL_STEP + 40; }   // fixed scroll distance for the reveal
+  const PIN_TOP=90; // must match --pin-top in the CSS
+
+  // ---- scroll gate --------------------------------------------------------------------------------
+  // Makes the reveal impossible to skip with a large scroll delta, WITHOUT hijacking normal scrolling.
+  // Native sticky positioning does not stop the page from scrolling straight past a short pinned zone,
+  // so a single fast wheel/trackpad flick (delta far larger than the ~700px pin room) can carry the
+  // viewport from before the drawer all the way to the footer in one gesture. This caps that overshoot:
+  // while the reveal is genuinely incomplete it clamps the scroll position to the end of the reveal
+  // zone (gateY), so the flick is caught at the pinned drawer, which stays in view while the eased
+  // reveal plays. It only ever limits DOWNWARD overshoot past an unfinished reveal; it never touches
+  // upward scrolling, never affects the rest of the page, and disarms permanently the instant the
+  // reveal completes. Runs every frame from the same loop that drives Lenis, so it covers smooth
+  // (Lenis) and native scrolling identically. gateY is measured live, so it survives resizes.
+  function scrollGate(){
+    if(reduceMotion || revealDone || activeIdx>=0 || !drawerStage || pgRevealScroll<=0) return;
+    var stageDocTop=drawerStage.getBoundingClientRect().top + window.scrollY;
+    var gateY=stageDocTop - PIN_TOP + pgRevealScroll; // scrollY at which every shelf has revealed
+    if(gateY<0) return;
+    if(window.scrollY > gateY + 1){
+      if(lenis && typeof lenis.scrollTo==='function') lenis.scrollTo(gateY,{immediate:true,force:true});
+      else window.scrollTo(0,gateY);
+    }
+  }
+
+  let drawerH=0;
+  // Reserve scroll room below the drawer so native position:sticky has somewhere to pin: the drawer
+  // stays held for `pinRoom` of scroll, then releases. Skipped while a case study is open (that layout
+  // flows on its own). Recomputed on resize/load and after the folders are dealt.
   function sizeStage(){
-    if(!drawerStage){return;}
-    if(reduceMotion){ drawerStage.style.minHeight=''; return; }
-    drawerStage.style.minHeight=(drawer.offsetHeight + 96 + revealBudget())+'px';
+    if(!drawerStage) return;
+    if(activeIdx>=0){ drawerStage.style.minHeight=''; return; } // a folder is open: let it flow
+    drawerH=drawer.offsetHeight;
+    var perShelf=Math.round(Math.max(120, Math.min(180, window.innerHeight*0.17)));
+    pgRevealScroll=folders.length*perShelf;                              // scroll needed to reveal every shelf
+    var holdScroll=Math.round(Math.max(120, window.innerHeight*0.16));   // a settled hold before the pin releases
+    pgPinRoom=pgRevealScroll+holdScroll;
+    drawerStage.style.minHeight=(drawerH+pgPinRoom)+'px';
   }
-  let revealedCount=0, revealHandedOff=false, scrollRevealOn=false;
-  function revealUpTo(k){
-    for(var i=revealedCount;i<k;i++){
-      var f=folders[i];
-      f.style.transform='translateY('+(i*STACK_STEP)+'px)';
-      f.classList.remove('predeal');
-      playTick();
-    }
-    if(k>revealedCount)revealedCount=k;
-    if(revealedCount>=folders.length && !revealHandedOff){
-      revealHandedOff=true;
-      setTimeout(function(){
-        folders.forEach(function(f){f.classList.remove('dealing');});
-        if(!reduceMotion){ layout(); lightRAF=requestAnimationFrame(lightLoop); }
-      },1500);
-    }
-  }
-  function onRevealScroll(){
-    if(!scrollRevealOn||!drawerStage)return;
-    var r=drawerStage.getBoundingClientRect();
-    var pinLen=revealBudget();                       // stable: matches the budget sizeStage() reserves
-    var p=pinLen>0 ? (96 - r.top)/pinLen : 1;
-    if(p<0)p=0; if(p>1)p=1;
-    var k=Math.max(1, Math.round(p*folders.length));
-    revealUpTo(k);
-  }
+  var measurePin=sizeStage; // back-compat alias for existing hooks
+
+  sizeStage();
+  try{ if(window.ResizeObserver){ new ResizeObserver(function(){ sizeStage(); }).observe(drawer); } }catch(e){}
+  window.addEventListener('load', sizeStage);
+  setTimeout(sizeStage, 400);
+
+  var revealStarted=false;
   function startScrollReveal(){
-    folders.forEach(function(f,i){ f.style.setProperty('--predealY',(90+i*34)+'px'); f.classList.add('dealing'); });
-    sizeStage();
-    scrollRevealOn=true;
-    // keep the pinned stage exactly as tall as the drawer needs, even as images / layout settle,
-    // so the reveal fraction stays accurate no matter when things finish loading
-    try{ if(window.ResizeObserver){ new ResizeObserver(function(){ sizeStage(); }).observe(drawer); } }catch(e){}
-    window.addEventListener('load', sizeStage);
-    setTimeout(sizeStage, 400);
-    window.addEventListener('scroll', onRevealScroll, {passive:true});
-    try{ if(typeof lenis!=='undefined' && lenis && lenis.on){ lenis.on('scroll', onRevealScroll); } }catch(e){}
-    onRevealScroll();
+    if(revealStarted) return;      // idempotent — only run once
+    revealStarted=true;
+    drawer.classList.remove('booting');
+    // Snap any leftover boot transform to none instantly so the shelves reveal from a clean base.
+    var prevT=drawer.style.transition;
+    drawer.style.transition='none';
+    drawer.style.transform='none';
+    void drawer.offsetHeight;       // force reflow so the snap takes effect now
+    drawer.style.transition=prevT;
+    // reserve the deck height so nothing below jumps as the shelves settle
+    stack.style.height=((folders.length-1)*STACK_STEP + deckReserve())+'px';
+    if(reduceMotion){
+      // no scrub: show every shelf at rest immediately
+      folders.forEach(function(f,i){ f.classList.remove('predeal','dealing'); f.style.opacity='1'; f.style.filter='none'; f.style.transform='translateY('+(i*STACK_STEP)+'px)'; });
+      revealDone=true; layout(); return;
+    }
+    // Shelves wait hidden, tucked just below their stacked slot. They fade in one-by-one as the pinned
+    // drawer is scrolled (the scrub lives in the stack loop below); the reserved pin room holds the
+    // drawer until every shelf is in, so the reader can't scroll past the section before it completes.
+    drawerOpen=true;               // the sealed front is up; the reveal may run
+    folders.forEach(function(f,i){ f.classList.remove('predeal','dealing','lightdriven'); f.style.transition='none'; f.style.opacity='0'; f.style.filter='blur(4px)'; f.style.transform='translateY('+(i*STACK_STEP+30)+'px)'; });
+    sizeStage();                   // reserve pin room for the full reveal + a settled hold
+    if(!lightRAF) lightRAF=requestAnimationFrame(lightLoop); // start the loop that scrubs, then hovers
   }
   function bootSequence(){
     if(reduceMotion){
@@ -1268,9 +1431,12 @@
       }, 1000);
       setTimeout(startScrollReveal, 1160);
     });
+    // Safety net: arm the pin on a hard timer regardless of whether the boot
+    // type-animation callback fires, so the drawer is always pinnable.
+    setTimeout(function(){ drawer.classList.remove('booting'); startScrollReveal(); }, 2600);
   }
   bootSequence();
-  window.addEventListener('resize',function(){layout();sizeStage();});
+  window.addEventListener('resize',function(){ STACK_STEP=pgStep(); if(activeIdx<0 && revealStarted){ folders.forEach(function(f,i){ if(!f.classList.contains('predeal')) f.style.transform='translateY('+(i*STACK_STEP)+'px)'; }); } layout();sizeStage();});
 </script>
 
 <script>
@@ -1286,7 +1452,7 @@
 
   var css=document.createElement('style');
   css.textContent=[
-   ".cursor{display:none !important;}",
+   ".cursor,.cursor-cross,.cursor-label{display:none !important;}",
    "#acqCur{position:fixed;left:0;top:0;width:40px;height:40px;z-index:9999;pointer-events:none;opacity:0;transition:opacity .3s ease;will-change:transform;}",
    "#acqCur svg{display:block;overflow:visible;}",
    ".ac-reticle{transform-origin:20px 20px;transition:opacity .25s ease,transform .3s cubic-bezier(.65,0,.35,1);}",

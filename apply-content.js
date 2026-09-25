@@ -64,6 +64,7 @@
       var mt = f.querySelector(".fi-meta"); if (mt) mt.innerHTML = (p.discipline || "") + "<br>" + (p.year || "");
       f.setAttribute("aria-label", "Open case study: " + p.title + ", PROJECT_0" + (i + 1) + " \u00b7 " + (p.tag || ""));
       var pv = f.querySelector(".folder-preview"); if (pv) pv.className = "folder-preview " + (p.thumbnail || "");
+      var note = f.querySelector(".fi-note"); if (note) note.textContent = p.descriptor || "";
     });
   }
 })();

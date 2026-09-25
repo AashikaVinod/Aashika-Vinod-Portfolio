@@ -3,16 +3,27 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>After Hours · Aashika Vinod</title>
+<title>After Hours &middot; Aashika Vinod</title>
+<meta name="description" content="Aashika Vinod beyond the work: interests and life off the clock.">
+<script type="application/ld+json">
+{"@context":"https://schema.org","@type":"Person","name":"Aashika Vinod","jobTitle":"Designer, Engineer & Researcher","url":"https://aashikavinod.github.io/Aashika-Vinod-Portfolio/","sameAs":["https://www.linkedin.com/in/aashika-vinod-391161302","https://www.behance.net/aashikav2","https://github.com/AashikaVinod"]}
+</script>
 <link rel="icon" href="favicon.ico" sizes="any">
 <link rel="icon" type="image/png" sizes="32x32" href="favicon-32.png">
 <link rel="icon" type="image/png" sizes="16x16" href="favicon-16.png">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
 
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="dns-prefetch" href="https://fonts.googleapis.com">
+<link rel="dns-prefetch" href="https://fonts.gstatic.com">
+<link rel="dns-prefetch" href="https://www.behance.net">
+<link rel="dns-prefetch" href="https://www.linkedin.com">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Roboto:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@400;600&display=swap">
+<script src="content/media.js"></script>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;700&family=Roboto:wght@400;500&family=JetBrains+Mono:wght@400;500&family=Caveat:wght@400;600&display=swap');
-
-  :root{
+  
+  :root{--green:#8CC6A9;--purple:#C9A0DC;--red-rgb:232,93,93;--cream-rgb:245,242,237;--navy-rgb:30,42,58;--red:#E85D5D;--navy:#1E2A3A;--cream:#F5F2ED;
     --cream:#F5F2ED; --white:#FFF; --navy:#1E2A3A; --gray:#5A6470;
     --blue:#B4D0DC; --blue-line:#7FA5B5; --red:#E85D5D; --line:#D9D5CE;
     --c-design:#E85D5D; --c-dev:#7FA5B5; --c-research:#8CC6A9; --c-creative:#C9A0DC;
@@ -65,13 +76,21 @@
   body.scene-dark .logo-nav .nm,
   body.scene-dark .section-tag,
   body.scene-dark .hud,
-  body.scene-dark .addr{color:rgba(245,242,237,.74);}
-  body.scene-dark .logo-nav:hover .nm{color:#F5F2ED;}
-  body.scene-dark .hist .h{color:rgba(245,242,237,.5);}
-  body.scene-dark .hist .h.on{color:#F5F2ED;}
-  body.scene-dark .hist .h .tick{background:rgba(245,242,237,.5);}
+  body.scene-dark .addr{color:rgba(var(--cream-rgb),.74);}
+  body.scene-dark .logo-nav:hover .nm{color:var(--cream);}
+  body.scene-dark .hist .h{color:rgba(var(--cream-rgb),.62);}
+  body.scene-dark .hist .h.on{color:var(--cream);}
+  body.scene-dark .hist .h .tick{background:rgba(var(--cream-rgb),.5);}
   body.scene-dark .hist .h.on .tick{background:var(--red);}
-  body.scene-dark .addr .lock{border-color:rgba(245,242,237,.6);}
+  body.scene-dark .addr .lock{border-color:rgba(var(--cream-rgb),.6);}
+  /* portrait: photos are contained, so the page background stays cream behind the fixed chrome.
+     Keep chrome dark for legibility even on dark scenes (the light tint would vanish on cream). */
+  body.ah-portrait.scene-dark .logo-nav .nm,
+  body.ah-portrait.scene-dark .section-tag,
+  body.ah-portrait.scene-dark .hud,
+  body.ah-portrait.scene-dark .addr{color:var(--ink-soft);}
+  body.ah-portrait.scene-dark .logo-nav:hover .nm{color:var(--ink);}
+  body.ah-portrait.scene-dark .addr .lock{border-color:var(--ink-soft);}
 
   /* scroll driver + fixed stage */
   #scroll{position:relative;width:100%;}
@@ -81,10 +100,10 @@
 
   /* photographs the point of the page */
   .plate{background:var(--white);padding:14px;border-radius:2px;
-         box-shadow:0 40px 80px -34px rgba(30,42,58,.55),0 3px 12px rgba(30,42,58,.10);}
-  .bleed{border-radius:2px;overflow:hidden;box-shadow:0 50px 110px -50px rgba(30,42,58,.6);}
+         box-shadow:0 40px 80px -34px rgba(var(--navy-rgb),.55),0 3px 12px rgba(var(--navy-rgb),.10);}
+  .bleed{border-radius:2px;overflow:hidden;box-shadow:0 50px 110px -50px rgba(var(--navy-rgb),.6);}
   .po{background:var(--white);padding:9px 9px 30px;border-radius:1px;
-      box-shadow:0 26px 54px -30px rgba(30,42,58,.55);}
+      box-shadow:0 26px 54px -30px rgba(var(--navy-rgb),.55);}
   .frame{position:relative;overflow:hidden;border-radius:1px;background:#111;width:100%;}
   .frame svg{display:block;width:100%;height:100%;position:absolute;inset:0;}
   .grain{position:absolute;inset:0;background-size:180px 180px;mix-blend-mode:overlay;opacity:.32;pointer-events:none;}
@@ -92,9 +111,9 @@
   .bleed .vig{background:radial-gradient(134% 126% at 44% 34%,rgba(0,0,0,0) 50%,rgba(20,26,36,.4) 100%);}
 
   /* supporting scraps, kept sparse */
-  .note{background:#FBF7EE;box-shadow:0 16px 34px -20px rgba(30,42,58,.5);padding:16px 18px;}
+  .note{background:#FBF7EE;box-shadow:0 16px 34px -20px rgba(var(--navy-rgb),.5);padding:16px 18px;}
   .note .h{font-family:'Caveat',cursive;font-weight:600;color:var(--ink);line-height:.98;}
-  .ticket{background:var(--white);border:1px solid var(--hair);box-shadow:0 14px 30px -20px rgba(30,42,58,.5);
+  .ticket{background:var(--white);border:1px solid var(--hair);box-shadow:0 14px 30px -20px rgba(var(--navy-rgb),.5);
           font-family:'JetBrains Mono',monospace;letter-spacing:.12em;text-transform:uppercase;color:var(--ink-soft);
           display:flex;align-items:center;overflow:hidden;font-size:10px;}
   .ticket .stub{align-self:stretch;display:flex;align-items:center;padding:0 12px;border-right:1px dashed var(--hair);color:var(--red);}
@@ -111,11 +130,11 @@
   .cap .u{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.03em;color:var(--ink-soft);opacity:.6;margin-top:22px;}
   .cap.lite::before{content:'';position:absolute;inset:-22px -26px -22px -26px;z-index:-1;
       background:rgba(15,21,30,.78);border-radius:12px;}
-  .cap.lite .k{color:rgba(245,242,237,.72);}
+  .cap.lite .k{color:rgba(var(--cream-rgb),.72);}
   .cap.lite .k b{color:var(--red);}
   .cap.lite .t{color:#F6F2EB;text-shadow:0 2px 22px rgba(12,16,24,.55);}
-  .cap.lite .v{color:rgba(245,242,237,.82);text-shadow:0 1px 14px rgba(12,16,24,.5);}
-  .cap.lite .u{color:rgba(245,242,237,.66);}
+  .cap.lite .v{color:rgba(var(--cream-rgb),.82);text-shadow:0 1px 14px rgba(12,16,24,.5);}
+  .cap.lite .u{color:rgba(var(--cream-rgb),.66);}
   /* chapter index: a quiet sense of moving through a collection toward the end */
   .cap .cx{font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.24em;color:var(--red);margin-bottom:14px;}
   .cap.lite .cx{color:var(--red);}
@@ -145,8 +164,21 @@
   }
   /* portrait remap active (set by JS): keep these in sync with the remap regardless of width */
   body.ah-portrait .hist{display:none;}
-  body.ah-portrait .cap{width:min(560px,86vw);}
-  body.ah-portrait .cap .t{font-size:clamp(30px,7vw,48px);}
+  /* portrait: the caption card sits centre-bottom where the fixed address bar lives, and the card
+     already prints the same aashika:// url — hide the fixed one so they don't overlap. */
+  body.ah-portrait .addr{display:none;}
+  body.ah-portrait .cap{width:min(500px,84vw);}
+  body.ah-portrait .cap .t{font-size:clamp(26px,6vw,40px);}
+  body.ah-portrait .cap .v{font-size:14px;max-width:34ch;}
+  /* portrait: light-spread captions get a soft readable card so text never gets lost behind an
+     overlapping photo (dark spreads already carry .cap.lite). Barely visible over cream, opaque
+     enough to hold up over a photo. */
+  body.ah-portrait .cap:not(.lite){
+    background:rgba(var(--cream-rgb),.86);
+    -webkit-backdrop-filter:blur(5px);backdrop-filter:blur(5px);
+    border-radius:14px;padding:22px 26px;
+    box-shadow:0 24px 60px -34px rgba(var(--navy-rgb),.5);
+  }
 
   /* shared OS footer, rises over the stage at the very end */
   .site-footer{position:relative;z-index:5;width:100%;min-height:100vh;background:var(--navy);
@@ -157,24 +189,24 @@
   .fe-title{font-family:'Space Grotesk',sans-serif;font-weight:500;font-size:clamp(22px,3vw,34px);letter-spacing:-.02em;line-height:1.28;color:var(--cream);}
   .fe-title em{font-style:normal;color:var(--red);}
   .footer-cta-block{margin-bottom:36px;}
-  .footer-mail{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.04em;color:var(--cream);border:1px solid rgba(245,242,237,.3);border-radius:8px;padding:16px 28px;cursor:none;transition:border-color .3s ease,color .3s ease;}
+  .footer-mail{display:inline-block;font-family:'JetBrains Mono',monospace;font-size:14px;letter-spacing:.04em;color:var(--cream);border:1px solid rgba(var(--cream-rgb),.3);border-radius:8px;padding:16px 28px;cursor:none;transition:border-color .3s ease,color .3s ease;}
   .footer-mail:hover{border-color:var(--red);color:var(--red);}
   .footer-social{margin-top:8px;display:flex;gap:24px;justify-content:center;flex-wrap:wrap;}
-  .footer-social a{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgba(245,242,237,.6);text-decoration:none;cursor:none;transition:color .3s ease;}
+  .footer-social a{font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.06em;text-transform:uppercase;color:rgba(var(--cream-rgb),.6);text-decoration:none;cursor:none;transition:color .3s ease;}
   .footer-social a:hover{color:var(--red);}
-  .footer-meta{width:100%;margin-top:48px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(245,242,237,.4);flex-wrap:wrap;gap:8px;}
+  .footer-meta{width:100%;margin-top:48px;display:flex;justify-content:space-between;font-family:'JetBrains Mono',monospace;font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:rgba(var(--cream-rgb),.62);flex-wrap:wrap;gap:8px;}
 
   /* global OS nav (added: connects every page) */
   /* footer nav: one clean row of links (never a wrapping wall of buttons) */
   /* footer nav: unified node cards, one row, identical on every page */
   .footer-nav{display:flex;flex-wrap:nowrap;gap:12px;width:100%;max-width:1120px;margin:0 auto 44px;padding:0;border:none;background:none;}
-  .footer-nav a{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:8px;padding:16px 16px 18px;border:1px solid rgba(245,242,237,.16);border-radius:10px;background:rgba(245,242,237,.02);text-decoration:none;cursor:none;transition:border-color .3s ease,background .3s ease,transform .3s var(--ease-out);}
-  .footer-nav a:hover{border-color:rgba(232,93,93,.55);background:rgba(245,242,237,.05);transform:translateY(-3px);}
-  .footer-nav a.active{border-color:var(--red);background:rgba(232,93,93,.1);cursor:default;}
+  .footer-nav a{flex:1 1 0;min-width:0;display:flex;flex-direction:column;gap:8px;padding:16px 16px 18px;border:1px solid rgba(var(--cream-rgb),.16);border-radius:10px;background:rgba(var(--cream-rgb),.02);text-decoration:none;cursor:none;transition:border-color .3s ease,background .3s ease,transform .3s var(--ease-out);}
+  .footer-nav a:hover{border-color:rgba(var(--red-rgb),.55);background:rgba(var(--cream-rgb),.05);transform:translateY(-3px);}
+  .footer-nav a.active{border-color:var(--red);background:rgba(var(--red-rgb),.1);cursor:default;}
   .footer-nav a.active .fn-id{color:var(--red);}
-  .footer-nav .fn-id{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(245,242,237,.4);}
-  .footer-nav .fn-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:500;letter-spacing:-.01em;color:#F5F2ED;}
-  .footer-nav .fn-desc{font-family:'Roboto',sans-serif;font-size:11px;line-height:1.35;color:rgba(245,242,237,.5);}
+  .footer-nav .fn-id{font-family:'JetBrains Mono',monospace;font-size:9px;letter-spacing:.14em;text-transform:uppercase;color:rgba(var(--cream-rgb),.62);}
+  .footer-nav .fn-name{font-family:'Space Grotesk',sans-serif;font-size:15px;font-weight:500;letter-spacing:-.01em;color:var(--cream);}
+  .footer-nav .fn-desc{font-family:'Roboto',sans-serif;font-size:11px;line-height:1.35;color:rgba(var(--cream-rgb),.62);}
   @media(max-width:820px){.footer-nav{flex-wrap:wrap;gap:10px;}.footer-nav a{flex:1 1 40%;}}
   /* keyboard focus: consistent on-brand ring. The site uses a custom cursor (cursor:none),
      so keyboard / assistive-tech users depend entirely on a clear, visible focus state. */
@@ -191,6 +223,22 @@
     .hero-name{font-size:clamp(38px,11vw,64px);}
   }
 
+  /* ===== V2 interaction affordances (consistent across pages) ===== */
+  .footer-social a{position:relative;padding-bottom:3px;}
+  .footer-social a::after{content:"";position:absolute;left:0;bottom:0;width:100%;height:1px;background:var(--red);opacity:.32;transition:opacity .3s ease;}
+  .footer-social a:hover::after,.footer-social a:focus-visible::after{opacity:1;}
+  .footer-mail{transition:border-color .3s ease,color .3s ease,transform .3s var(--ease-out,ease);}
+  .footer-mail:hover{transform:translateY(-2px);}
+  .footer-nav .fn-id{transition:color .3s ease;}
+  .footer-nav a:hover .fn-id{color:var(--red);}
+  a:focus-visible,button:focus-visible,[role="link"]:focus-visible,.folder:focus-visible,.node:focus-visible{outline:2px solid var(--red);outline-offset:3px;}
+  picture{display:contents}
+  /* A11y: 44px min tap target (invisible hit area, no layout shift) */
+  .footer-social a{position:relative;}
+  .footer-social a::before{content:"";position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);width:100%;height:44px;min-width:44px;}
+  /* footer grid (blueprint) — matches the homepage grid behind the footer */
+  .site-footer::before{content:"";position:absolute;inset:0;pointer-events:none;z-index:0;background-image:linear-gradient(var(--blue-line) 1px,transparent 1px),linear-gradient(90deg,var(--blue-line) 1px,transparent 1px);background-size:40px 40px;opacity:.08;}
+  .site-footer>*{position:relative;z-index:1;}
 </style>
   <script src="content/site.js"></script>
   <script src="content/navigation.js"></script>
@@ -205,6 +253,7 @@
 <div class="hist" id="hist"></div>
 <div class="addr" id="addr"><span class="lock"></span><span id="addrText">aashika://after-hours</span></div>
 
+<main>
 <div class="intro" id="intro">
   <div class="k" id="introK">Directory / After Hours &nbsp;<b>&middot;</b>&nbsp; off the clock</div>
   <div class="t" id="introT">The history<br>nobody clears.</div>
@@ -213,6 +262,8 @@
 
 <div id="scroll"><div id="stage" aria-hidden="false"></div></div>
 
+</main>
+
 <footer class="site-footer" id="siteFooter">
   <div class="footer-inner">
     <div class="footer-explore">
@@ -220,9 +271,9 @@
     </div>
             <nav class="footer-nav" aria-label="Explore">
       <a href="index.html"><span class="fn-id">NODE_00</span><span class="fn-name">Home</span><span class="fn-desc">Back to the start</span></a>
-      <a href="index.html#work" data-work><span class="fn-id">NODE_01</span><span class="fn-name">The Work</span><span class="fn-desc">Selected case studies</span></a>
+      <a href="index.html#work" data-work><span class="fn-id">NODE_01</span><span class="fn-name">Work</span><span class="fn-desc">Selected case studies</span></a>
       <a href="playground.html"><span class="fn-id">NODE_02</span><span class="fn-name">Playground</span><span class="fn-desc">Experiments &amp; builds</span></a>
-      <a href="building-aashika.html"><span class="fn-id">NODE_03</span><span class="fn-name">Building Aashika</span><span class="fn-desc">How I grew as a designer</span></a>
+      <a href="building-aashika.html"><span class="fn-id">NODE_03</span><span class="fn-name">Building Aashika</span><span class="fn-desc">Research, practice &amp; recognition</span></a>
       <a href="after-hours.html"><span class="fn-id">NODE_04</span><span class="fn-name">After Hours</span><span class="fn-desc">Off the clock</span></a>
     </nav>
     <div class="footer-cta-block">
@@ -360,8 +411,8 @@
     { label:'music', eyebrow:'volume all the way up', title:'music', slug:'music', mood:'playful',
       voice:"Headphones on, world off. Singing along like no one can hear me. They can.",
       pieces:[
-        ph('music',P.dusk, .38,.42,38,0.562,-3,.95,2,'plate','images/after-hours/music-1.jpg'),
-        ph('room', P.dusk, .60,.40,18,1.165, 5,1.06,3,'plate','images/after-hours/music-2.jpg'),
+        ph('music',P.dusk, .36,.46,38,0.562,-3,.95,2,'plate','images/after-hours/music-1.jpg'),
+        ph('room', P.dusk, .62,.35,18,1.165, 5,1.06,3,'plate','images/after-hours/music-2.jpg'),
         dd('wave',P.dusk.accent, .82,.24,0,1.26,7),
         no('volume: max', .22,.72,-4,1.2,6,28),
         cap(.72,.74,9)
@@ -395,22 +446,33 @@
      setMode() (below) swaps between desktop and portrait live on resize; the scroll / fade /
      drift engine itself is untouched, so the animation is identical in both. */
   (function(){
-    var SLOTS=[[.40,.23],[.63,.39],[.40,.55],[.66,.57],[.32,.42],[.60,.24]];
+    /* portrait remap: photos scatter across the upper region (collage kept), the caption
+       anchors at the bottom. Photo heights are capped so no single tall shot dominates the
+       viewport or runs down into the caption zone. */
+    /* portrait remap: photos sit as a more centred cluster (less left/right scatter) a little
+       lower on the screen, rendered bigger; the caption is pulled up from the very bottom so the
+       whole composition reads as a balanced centre block rather than top photos + bottom text. */
+    var SLOTS=[[.40,.24],[.61,.33],[.37,.48],[.63,.56],[.35,.38],[.59,.46]];
+    var HCAP=60; // max rendered photo height, in vw — bigger, editorial
     MEM.forEach(function(m){
-      var pi=0;
+      var pi=0, di=0;
       m.pieces.forEach(function(p){
         p.ox=p.x; p.oy=p.y; p.ow=p.w; p.orot=p.rot; p.odepth=p.depth; p.odx=(p.dx||0);
         p.mx=p.x; p.my=p.y; p.mw=p.w; p.mrot=p.rot; p.mdepth=p.depth; p.mdx=0;
         if(p.t==='photo'){ var s=SLOTS[pi%SLOTS.length]; pi++;
-          p.mx=s[0]; p.my=s[1]; p.mw=Math.max(30,Math.min(p.w,44)); p.mrot=(pi%2?4:-4); p.mdepth=1.0; }
-        else if(p.t==='cap'){ p.mx=.5; p.my=.84; p.mdepth=1.0; }
-        else if(p.t==='note'){ p.mx=.30; p.my=.09; p.mrot=-4; p.mdepth=1.1; }
+          var w=Math.min(p.w,64); if(w*p.ar>HCAP) w=HCAP/p.ar;   // clamp height for tall shots
+          p.mx=s[0]; p.my=s[1]; p.mw=Math.max(44,w); p.mrot=(pi%2?3:-3); p.mdepth=1.0; }
+        else if(p.t==='cap'){ p.mx=.5; p.my=.80; p.mdepth=1.0; }
+        else if(p.t==='note'){ p.mx=.30; p.my=.10; p.mrot=-4; p.mdepth=1.1; }
         else if(p.t==='ticket'){ p.mx=.5; p.my=.12; p.mdepth=1.1; }
-        else if(p.t==='doodle'){ p.mx=.85; p.my=.13; p.mdepth=1.15; }
+        else if(p.t==='doodle'){ p.mx=(di%2?.13:.87); p.my=.12+Math.floor(di/2)*.10; p.mdepth=1.15; di++; }
       });
     });
   })();
-  function ahIsMobile(){ return (window.innerWidth < 1440) || !!(window.matchMedia && (window.matchMedia('(hover:none)').matches || window.matchMedia('(pointer:coarse)').matches)); }
+  // Portrait remap runs only for genuinely narrow or portrait viewports (phones, portrait tablets,
+  // and windows resized tall-and-narrow). Any landscape window >=1024 keeps the desktop scatter, so
+  // laptops are never given the mobile layout. Width-based + orientation so it also works on resize.
+  function ahIsMobile(){ return (window.innerWidth < 1024) || (window.innerHeight > window.innerWidth); }
   var AH_MOBILE = ahIsMobile();
   MEM.forEach(function(m){ m.pieces.forEach(function(p){
     if(AH_MOBILE){ p.x=p.mx;p.y=p.my;p.w=p.mw;p.rot=p.mrot;p.depth=p.mdepth;p.dx=p.mdx; }
@@ -429,7 +491,7 @@
       el.style.left=(pc.x*100)+'%'; el.style.top=(pc.y*100)+'%'; el.style.zIndex=pc.z;
       if(pc.t==='photo'){
         el.classList.add(pc.style); el.style.width=pc.w+'vw';
-        var media=pc.img?'<img src="'+pc.img+'" alt="'+(m.title||'')+'" style="position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;">':scene(pc.kind,pc.pal);
+        var media=pc.img?window.picHTML(pc.img,{alt:(m.title||'after hours photo'),style:'position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:block;'}):scene(pc.kind,pc.pal);
         el.innerHTML='<div class="frame" style="aspect-ratio:'+(1/pc.ar).toFixed(4)+'">'+media+
           '<div class="grain" style="background-image:'+GRAIN+'"></div><div class="vig"></div>'+
           '</div>';
@@ -472,7 +534,7 @@
   var pnx=0, pny=0, pmx=0, pmy=0, PARA=15;
   function layout(){ vh=innerHeight; document.getElementById('scroll').style.height=((N+1)*vh)+'px'; }
 
-  var target=0, sp=0, lastActive=-1, navigating=false;
+  var target=0, sp=0, lastActive=-1, navigating=false, _lastTs=0;
   function readScroll(){ target=clamp(window.scrollY/vh - 1,0,N-1); }
 
   var renderBar=document.getElementById('renderBar'), hudText=document.getElementById('hudText'),
@@ -481,9 +543,13 @@
   var chromeEls=[document.getElementById('logoNav'),document.getElementById('osNav'),document.getElementById('sectionTag'),
                  document.getElementById('hud'),document.getElementById('hist'),addr];
 
-  function frame(){
-    if(RM) sp=target; else sp += (target-sp)*0.10;
-    if(!RM){ pmx += (pnx-pmx)*0.055; pmy += (pny-pmy)*0.055; }
+  function frame(t){
+    // frame-rate-independent easing: identical feel at 60Hz, consistent on 120/144Hz displays
+    var dt = _lastTs ? Math.min(50, t-_lastTs) : 16.667; _lastTs=t;
+    var kScroll = 1-Math.pow(0.90, dt/16.667);   // was a flat 0.10 per frame
+    var kPara   = 1-Math.pow(0.945, dt/16.667);  // was a flat 0.055 per frame
+    if(RM) sp=target; else sp += (target-sp)*kScroll;
+    if(!RM){ pmx += (pnx-pmx)*kPara; pmy += (pny-pmy)*kPara; }
     if(Math.abs(target-sp)<0.0004) sp=target;
 
     for(var i=0;i<N;i++){
@@ -597,7 +663,7 @@
 
   var css=document.createElement('style');
   css.textContent=[
-   ".cursor{display:none !important;}",
+   ".cursor,.cursor-cross,.cursor-label{display:none !important;}",
    "#acqCur{position:fixed;left:0;top:0;width:40px;height:40px;z-index:9999;pointer-events:none;opacity:0;transition:opacity .3s ease;will-change:transform;}",
    "#acqCur svg{display:block;overflow:visible;}",
    ".ac-reticle{transform-origin:20px 20px;transition:opacity .25s ease,transform .3s cubic-bezier(.65,0,.35,1);}",
